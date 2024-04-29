@@ -5,11 +5,13 @@ import * as FilePond from 'filepond';
 import 'filepond/dist/filepond.css';
 import 'filepond-plugin-file-validate-size';
 import 'filepond-plugin-file-validate-type';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TablaScriptsComponent],
+  imports: [RouterOutlet, TablaScriptsComponent, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
