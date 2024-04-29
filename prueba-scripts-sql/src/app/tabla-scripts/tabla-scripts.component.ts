@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { ApiQueriesService } from '../services/api-queries.service';
 
 
 @Component({
@@ -8,15 +9,27 @@ import { Component, Inject, OnInit } from '@angular/core';
   styleUrls: ['./tabla-scripts.component.css']
 })
 export class TablaScriptsComponent implements OnInit {
-  selectedFileName: string | null = null;
   selectedFolder: any;
   folderFiles: File[] = [];
   selectedFiles: FileList | null = null;
 
-  constructor() { }
+  constructor(private apiQueriesService: ApiQueriesService) { }
 
   ngOnInit(): void {
     // Aquí puedes realizar cualquier inicialización necesaria
+  }
+
+  enviarNombresArchivos(nombresArchivos: string[]) {
+    this.apiQueriesService.verificarArchivos(nombresArchivos).subscribe(
+      respuesta => {
+        // Manejar la respuesta del servidor si es necesario
+        console.log(respuesta);
+      },
+      error => {
+        // Manejar errores si la solicitud falla
+        console.error(error);
+      }
+    );
   }
 
   selectFolder(event: any) {
@@ -37,7 +50,6 @@ export class TablaScriptsComponent implements OnInit {
     }
   }
 
-
   onFileChange(event: any) {
     this.selectedFiles = event.target.files;
     console.log('Archivos seleccionados:', this.selectedFiles);
@@ -54,13 +66,8 @@ export class TablaScriptsComponent implements OnInit {
         fileSize.push(file.size.toString())
       }
 
-      //Muestra los nombres de los archivos en la consola
-      console.log('Nombres de archivos:', fileNames);
-
-      //mostrar los nombres de los archivos en la interfaz de usuario
-      //asignando fileNames a una propiedad en el componente y mostrarla en el HTML
-      //this.fileNamesToShow = fileNames;
+      // Envia los nombres de los archivos al servicio API
+      this.enviarNombresArchivos(fileNames);
     }
   }
-  
 }
