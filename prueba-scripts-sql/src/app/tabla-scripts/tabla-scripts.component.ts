@@ -47,9 +47,11 @@ export class TablaScriptsComponent implements OnInit {
     if (this.selectedFiles && this.selectedFiles.length > 0) {
       //Itera sobre la lista de archivos seleccionados para obtener los nombres
       let fileNames: string[] = [];
+      let fileSize: string[] = [];
       for (let i = 0; i < this.selectedFiles.length; i++) {
         const file = this.selectedFiles[i];
         fileNames.push(file.name);
+        fileSize.push(file.size.toString())
       }
 
       //Muestra los nombres de los archivos en la consola
