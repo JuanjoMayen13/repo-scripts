@@ -20,6 +20,11 @@ export class TablaScriptsComponent implements OnInit {
   }
 
   enviarNombresArchivos(nombresArchivos: string[]) {
+    if (nombresArchivos.length === 0) {
+      console.error('No se han seleccionado archivos para enviar.');
+      return;
+    }
+  
     this.apiQueriesService.verificarArchivos(nombresArchivos).subscribe(
       respuesta => {
         // Manejar la respuesta del servidor si es necesario
@@ -31,6 +36,7 @@ export class TablaScriptsComponent implements OnInit {
       }
     );
   }
+   
 
   selectFolder(event: any) {
     if (event.target.files.length > 0) {
