@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiQueries", "ApiQueries\ApiQueries.csproj", "{D8FAFB4D-1A82-418F-8960-24CF029B20FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8FAFB4D-1A82-418F-8960-24CF029B20FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8FAFB4D-1A82-418F-8960-24CF029B20FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8FAFB4D-1A82-418F-8960-24CF029B20FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8FAFB4D-1A82-418F-8960-24CF029B20FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1D1C428-20F1-4956-AF2A-CD665F44F7C1}
+	EndGlobalSection
+EndGlobal
