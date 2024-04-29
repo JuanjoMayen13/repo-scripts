@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 
 @Component({
@@ -7,23 +7,58 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
   templateUrl: './tabla-scripts.component.html',
   styleUrls: ['./tabla-scripts.component.css']
 })
-export class TablaScriptsComponent {
-  selectedFiles: FileList | undefined;
+export class TablaScriptsComponent implements OnInit {
+  selectedFileName: string | null = null;
+  selectedFolder: any;
+  folderFiles: File[] = [];
+  selectedFiles: FileList | null = null;
 
   constructor() { }
 
-  onFileSelected(event: any) {
-    this.selectedFiles = event.target.files;
+  ngOnInit(): void {
+    // Aquí puedes realizar cualquier inicialización necesaria
   }
 
-  onSubmit() {
-    if (this.selectedFiles) {
-      const file: File = this.selectedFiles[0];
-      console.log('Archivo seleccionado:', file);
-      // Aquí puedes enviar el archivo al servidor o realizar cualquier otra acción necesaria.
-    } else {
-      console.log('Ningún archivo seleccionado.');
+  selectFolder(event: any) {
+    if (event.target.files.length > 0) {
+      this.selectedFolder = event.target.files[0];
+      console.log('Carpeta seleccionada:', this.selectedFolder);
+
+      //Verifica si el objeto tiene la propiedad webkitRelativePath
+      if ('webkitRelativePath' in this.selectedFolder) {
+        const filesArray = Array.from(event.target.files) as File[];
+        //Filtra los archivos que pertenecen a la carpeta seleccionada
+        this.folderFiles = filesArray.filter(file =>
+          file.webkitRelativePath.startsWith(this.selectedFolder.webkitRelativePath)
+        );
+      } else {
+        console.warn('La propiedad webkitRelativePath no está disponible en este navegador.');
+      }
     }
   }
 
+
+  onFileChange(event: any) {
+    this.selectedFiles = event.target.files;
+    console.log('Archivos seleccionados:', this.selectedFiles);
+    this.selectedFolder = event.target.files[0];
+    console.log('Carpeta seleccionada:', this.selectedFolder);
+    //Verifica si se seleccionaron archivos
+    if (this.selectedFiles && this.selectedFiles.length > 0) {
+      //Itera sobre la lista de archivos seleccionados para obtener los nombres
+      let fileNames: string[] = [];
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        const file = this.selectedFiles[i];
+        fileNames.push(file.name);
+      }
+
+      //Muestra los nombres de los archivos en la consola
+      console.log('Nombres de archivos:', fileNames);
+
+      //mostrar los nombres de los archivos en la interfaz de usuario
+      //asignando fileNames a una propiedad en el componente y mostrarla en el HTML
+      //this.fileNamesToShow = fileNames;
+    }
+  }
+  
 }
