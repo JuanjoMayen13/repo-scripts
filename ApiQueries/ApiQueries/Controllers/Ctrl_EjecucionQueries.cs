@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApiQueries.Controllers
 {
@@ -17,31 +17,34 @@ namespace ApiQueries.Controllers
     public class Ctrl_EjecucionQueries : ControllerBase
     {
         [HttpPost()]
-        public IActionResult ExecuteSqlFolder([FromBody] string folderPath)
+        public async Task<IActionResult> UploadSqlFiles([FromForm] List<IFormFile> sqlFiles)
         {
-            if (string.IsNullOrEmpty(folderPath))
+            if (sqlFiles == null || !sqlFiles.Any())
             {
-                return BadRequest("No se ha proporcionado una ruta de carpeta.");
+                return BadRequest("No se han proporcionado archivos SQL.");
             }
 
             Conexion cn = new Conexion();
 
             try
             {
-               
-                string[] sqlFiles = Directory.GetFiles(folderPath, "*.sql");
-
-           
                 using (SqlConnection sqlConnection = new SqlConnection(cn.cadenaSQL()))
                 {
-                    sqlConnection.Open();
+                    await sqlConnection.OpenAsync();
 
-                    foreach (var sqlFile in sqlFiles)
+                    foreach (var file in sqlFiles)
                     {
-                        string sqlScript = System.IO.File.ReadAllText(sqlFile);
-                        using (SqlCommand command = new SqlCommand(sqlScript, sqlConnection))
+                        if (file == null || file.Length == 0)
+                            continue;
+
+                        using (var reader = new StreamReader(file.OpenReadStream()))
                         {
-                            command.ExecuteNonQuery();
+                            var sqlScript = await reader.ReadToEndAsync();
+
+                            using (SqlCommand command = new SqlCommand(sqlScript, sqlConnection))
+                            {
+                                await command.ExecuteNonQueryAsync();
+                            }
                         }
                     }
                 }

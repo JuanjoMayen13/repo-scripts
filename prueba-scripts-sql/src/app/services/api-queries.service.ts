@@ -11,7 +11,7 @@ export class ApiQueriesService {
   constructor(private http: HttpClient) { }
 
   verificarArchivos(nombresArchivos: string[]): Observable<any> {
-    const url = 'http://192.168.1.16:9093/api/Ctrl_VerificarArchivos';
+    const url = 'http://192.168.1.17:9093/api/Ctrl_VerificarArchivos';
     return this.http.post(url, nombresArchivos);
   }
 }

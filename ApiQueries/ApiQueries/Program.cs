@@ -8,16 +8,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigin",
-        builder =>
-        {
-            builder.WithOrigins("http://localhost:52933")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
+
 
 // Configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -48,7 +39,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowSpecificOrigin");
+app.UseCors(builder => builder
+    .WithOrigins("http://localhost:4200")
+    .AllowAnyHeader()
+    .AllowAnyMethod());
 
 app.UseHttpsRedirection();
 
