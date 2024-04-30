@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { ApiQueriesService } from '../services/api-queries.service';
 
 
@@ -12,14 +12,26 @@ export class TablaScriptsComponent implements OnInit {
   selectedFolder: any;
   folderFiles: File[] = [];
   selectedFiles: FileList | null = null;
+  @ViewChild('fileButton') fileButton!: ElementRef<HTMLInputElement>;
 
   constructor(private apiQueriesService: ApiQueriesService) { }
 
   ngOnInit(): void {
     // Aquí puedes realizar cualquier inicialización necesaria
   }
-
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'F1') {
+      event.preventDefault(); // Evita la acción predeterminada de la tecla F1
+      this.openFileExplorer();
+    }
+  }
+  
   enviarNombresArchivos(nombresArchivos: string[]) {
+    if (nombresArchivos.length === 0) {
+      console.error('No se han seleccionado archivos para enviar.');
+      return;
+    }
     this.apiQueriesService.verificarArchivos(nombresArchivos).subscribe(
       respuesta => {
         // Manejar la respuesta del servidor si es necesario
@@ -30,6 +42,19 @@ export class TablaScriptsComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  
+  openFileExplorer() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.multiple = true;
+    fileInput.webkitdirectory = true;
+    fileInput.style.display = 'none';
+    fileInput.addEventListener('change', this.onFileChange.bind(this));
+    document.body.appendChild(fileInput);
+    fileInput.click();
+    document.body.removeChild(fileInput);
   }
 
   selectFolder(event: any) {

@@ -1,4 +1,10 @@
+<!-- Etiqueta label asociada al botón -->
+<label for="fileButton">Seleccionar archivos y carpetas</label>
+<!-- Botón personalizado con las mismas propiedades que un input de tipo file -->
+<button #fileButton (click)="openFileExplorer()" type="button" multiple webkitdirectory>Seleccionar archivos y carpetas</button>
 
-<input type="file" webkitdirectory (change)="selectFolder($event)">
-<p>Ruta: {{selectedFolder}}</p>
-<input type="file" webkitdirectory (change)="onFileChange($event)" multiple>
+
+
+<!-- <input #fileInput id="fileInput" type="file" webkitdirectory (change)="onFileChange($event)" multiple> -->
+
+<!-- <button #fileButton (click)="fileInput.click()" type="button" multiple webkitdirectory (change)="onFileChange($event)">Seleccionar archivos y carpetas</button> -->
