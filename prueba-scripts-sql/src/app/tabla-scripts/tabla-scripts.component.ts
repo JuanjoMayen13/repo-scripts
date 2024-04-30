@@ -19,10 +19,11 @@ export class TablaScriptsComponent implements OnInit {
   ngOnInit(): void {
     // Aquí puedes realizar cualquier inicialización necesaria
   }
+
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'F1') {
-      event.preventDefault(); // Evita la acción predeterminada de la tecla F1
+      event.preventDefault(); //Evita la accion por default de la tecla F1
       this.openFileExplorer();
     }
   }
@@ -43,7 +44,6 @@ export class TablaScriptsComponent implements OnInit {
       }
     );
   }
-   
 
 
   openFileExplorer() {

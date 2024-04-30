@@ -1,10 +1,53 @@
-<!-- Etiqueta label asociada al botón -->
-<label for="fileButton">Seleccionar archivos y carpetas</label>
-<!-- Botón personalizado con las mismas propiedades que un input de tipo file -->
-<button #fileButton (click)="openFileExplorer()" type="button" multiple webkitdirectory>Seleccionar archivos y carpetas</button>
 
 
 
-<!-- <input #fileInput id="fileInput" type="file" webkitdirectory (change)="onFileChange($event)" multiple> -->
+    
+        <!-- Contenedor tipo card con botones -->
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-10  absolute left-10 top-80" style="background-color: #DBD8D8;">
+            <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2">Contenedor</div>
+                <div class="grid grid-cols-1 gap-4">
+                    <button class="rounded-lg border-2 p-5 transition ease-in-out delay-150 bg-white hover:-translate-y-1 hover:scale-110 " 
+                        #fileButton1 (click)="openFileExplorer()" type="button" multiple webkitdirectory>
+                        <i class="fa-regular fa-folder-closed mr-2"></i>Seleccione la carpeta
+                    </button>
+                    <button class="rounded-lg border-2 p-5 transition ease-in-out delay-150 bg-green-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-300 duration-300" 
+                    style="background-color:#38B6FF" #fileButton2 (click)="openFileExplorer()" type="button" multiple webkitdirectory>
+                    <i class="fa-solid fa-rotate-right mr-2"></i>Actualizar
+                    </button>
+                    <button class="rounded-lg border-2 p-5 transition ease-in-out delay-150 bg-green-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-300 duration-300" 
+                    style="background-color:#FF5757" #fileButton2 (click)="openFileExplorer()" type="button" multiple webkitdirectory>
+                    <i class="fa-solid fa-repeat mr-2"></i>Reemplazar
+                    </button>
+                    <!-- Agrega más botones según sea necesario -->
+                </div>
+            </div>
+        </div>
 
-<!-- <button #fileButton (click)="fileInput.click()" type="button" multiple webkitdirectory (change)="onFileChange($event)">Seleccionar archivos y carpetas</button> -->
+  <div class="mt-5"></div>
+  <!-- Tabla para mostrar los archivos seleccionados -->
+  <table class="border-collapse border border-gray-300 mt-40 ml-auto mr-auto" >
+    <thead>
+      <tr style="background-color: #BFE5EF;">
+        <th class="px-6 py-3">Seleccionar</th>
+        <th class="px-6 py-3">Nombre de archivo</th>
+        <th class="px-6 py-3">Fecha actualización</th>
+        <th class="px-6 py-3">Usuario</th>
+        <th class="px-6 py-3">Descripción</th>
+        <th class="px-6 py-3">Existe</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Aquí puedes agregar filas dinámicamente con Angular según los archivos seleccionados -->
+      <!-- Por ejemplo, puedes usar *ngFor para iterar sobre una lista de archivos y mostrarlos en la tabla -->
+      <!-- <tr *ngFor="let archivo of archivosSeleccionados">
+           <td><input type="checkbox" [(ngModel)]="archivo.seleccionado"></td>
+           <td>{{ archivo.nombre }}</td>
+           <td>{{ archivo.fecha }}</td>
+           <td>{{ archivo.usuario }}</td>
+           <td>{{ archivo.descripcion }}</td>
+           <td>{{ archivo.existe }}</td>
+       </tr> -->
+    </tbody>
+  </table>
+  
