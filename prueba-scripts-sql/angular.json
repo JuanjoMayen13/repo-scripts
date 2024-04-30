@@ -25,7 +25,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/tailwindcss/tailwind.css",
+              "node_modules/tailwindcss/utilities.css",
+              "node_modules/tailwindcss/components.css",
+              "node_modules/tailwindcss/base.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -89,7 +93,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/tailwindcss/tailwind.css",
+              "node_modules/tailwindcss/utilities.css",
+              "node_modules/tailwindcss/components.css",
+              "node_modules/tailwindcss/base.css"
             ],
             "scripts": []
           }

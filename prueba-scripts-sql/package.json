@@ -21,6 +21,7 @@
     "@angular/platform-server": "^17.2.0",
     "@angular/router": "^17.2.0",
     "@angular/ssr": "^17.2.2",
+    "@fortawesome/fontawesome-free": "^6.5.2",
     "express": "^4.18.2",
     "filepond": "^4.31.1",
     "filepond-plugin-file-validate-size": "^2.2.8",
@@ -44,6 +45,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "tailwindcss": "^3.4.3",
     "typescript": "~5.3.2"
   }
 }

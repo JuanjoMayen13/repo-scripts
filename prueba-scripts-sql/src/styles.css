@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss/tailwind.css';
+@import '@fortawesome/fontawesome-free/css/fontawesome.css';
+@import '@fortawesome/fontawesome-free/css/solid.css';
+@import '@fortawesome/fontawesome-free/css/regular.css';
+@import '@fortawesome/fontawesome-free/css/brands.css';
+
+
+
+body {
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(to bottom, #ffffff, #e1e0fe, #bdc4fe, #8daaff, #3f92ff);
+            min-height: 100vh; /* Para que el fondo ocupe toda la altura de la ventana */
+            justify-content: center;
+            align-items: center;
+}
