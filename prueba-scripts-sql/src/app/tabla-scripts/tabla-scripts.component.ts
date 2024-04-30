@@ -43,8 +43,9 @@ export class TablaScriptsComponent implements OnInit {
       }
     );
   }
+   
 
-  
+
   openFileExplorer() {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
