@@ -1,24 +1,31 @@
 import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { ApiQueriesService } from '../services/api-queries.service';
 import { CommonModule } from '@angular/common';
+import { Archivos, estadoArchivos } from '../models/verificar-archivo.model';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-tabla-scripts',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './tabla-scripts.component.html',
   styleUrls: ['./tabla-scripts.component.css']
 })
 export class TablaScriptsComponent implements OnInit {
   selectedFolder: any;
+  //arreglos
   folderFiles: File[] = [];
+  estadoArchivos: estadoArchivos[] = [];
+  archivos: Archivos[] = [];
+
   selectedFiles: FileList | null = null;
   @ViewChild('fileButton') fileButton!: ElementRef<HTMLInputElement>;
 
   constructor(private apiQueriesService: ApiQueriesService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+  }
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -27,7 +34,30 @@ export class TablaScriptsComponent implements OnInit {
       this.openFileExplorer();
     }
   }
+
+  obtenerArchivos(): void {
+    this.apiQueriesService.getArchivos().subscribe(
+      archivos => {
+        this.archivos = archivos;
+      },
+      error => {
+        console.error('Error al obtener archivos:', error);
+      }
+    );
+  }
   
+
+  // obtenerEstadoArchivos(): void {
+  //   this.apiQueriesService.getEstadoArchivos().subscribe(
+  //     estadoArchivos => {
+  //       this.estadoArchivos = estadoArchivos;
+  //     },
+  //     error => {
+  //       console.error('Error al obtener el estado archivos:', error);
+  //     }
+  //   );
+  // }
+
   enviarNombresArchivos(nombresArchivos: string[]) {
     if (nombresArchivos.length === 0) {
       console.error('No se han seleccionado archivos para enviar.');
@@ -35,11 +65,11 @@ export class TablaScriptsComponent implements OnInit {
     }
     this.apiQueriesService.verificarArchivos(nombresArchivos).subscribe(
       respuesta => {
-        // Manejar la respuesta del servidor si es necesario
+        //Manejar la respuesta del servidor si es necesario
         console.log(respuesta);
       },
       error => {
-        // Manejar errores si la solicitud falla
+        //Manejar errores si la solicitud falla
         console.error(error);
       }
     );

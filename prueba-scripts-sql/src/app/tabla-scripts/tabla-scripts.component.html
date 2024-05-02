@@ -38,16 +38,21 @@
       </tr>
     </thead>
     <tbody>
-      <!-- Aquí puedes agregar filas dinámicamente con Angular según los archivos seleccionados -->
-      <!-- Por ejemplo, puedes usar *ngFor para iterar sobre una lista de archivos y mostrarlos en la tabla -->
-      <!-- <tr *ngFor="let archivo of archivosSeleccionados">
-           <td><input type="checkbox" [(ngModel)]="archivo.seleccionado"></td>
-           <td>{{ archivo.nombre }}</td>
-           <td>{{ archivo.fecha }}</td>
-           <td>{{ archivo.usuario }}</td>
-           <td>{{ archivo.descripcion }}</td>
-           <td>{{ archivo.existe }}</td>
-       </tr> -->
+      <!-- usar *ngFor para iterar sobre una lista de archivos y mostrar en la tabla -->
+      <tr *ngFor="let iarchivo of archivos">
+           <td><input type="checkbox" [(ngModel)]="iarchivo.archivo"></td>
+           <td>{{ iarchivo.archivo }}</td>
+           <td>{{ iarchivo.fecha_Hora }}</td>
+           <td>{{ iarchivo.userName }}</td>
+           <td>{{ iarchivo.descripcion }}</td>
+       </tr>
     </tbody>
   </table>
+
+
+
+<!-- 
+  <div *ngFor="let earchivos of estadoArchivos">
+    <p>{{estadoArchivos}}</p>
+  </div> -->
   
