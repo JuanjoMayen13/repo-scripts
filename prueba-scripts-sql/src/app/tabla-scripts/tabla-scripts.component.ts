@@ -13,12 +13,16 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./tabla-scripts.component.css']
 })
 export class TablaScriptsComponent implements OnInit {
-
   selectedFolder: any;
+  //arreglos para las interfaces o models
   folderFiles: File[] = [];
+  estadoArchivos: estadoArchivos[] = [];
+  archivos: Archivos[] = [];
+
+ 
   
   archivosEstado: estadoArchivos = { archivosGuardados: [], archivosFaltantes: [] };
-  archivos: Archivos[] = [];
+ 
   selectedFiles: FileList | null = null;
   @ViewChild('fileButton') fileButton!: ElementRef<HTMLInputElement>;
 
@@ -33,8 +37,13 @@ export class TablaScriptsComponent implements OnInit {
     @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'F1') {
-      event.preventDefault();
+      event.preventDefault(); //se evita la accion por default de la tecla F1
       this.openFileExplorer();
+    } if (event.key === 'F2') {
+      console.log("Se ejecuto F2 para actualizar un scipt")
+    } if (event.key === 'F3'){
+      event.preventDefault();
+      console.log("Se ejecuto F3 para reemplazar un script") 
     }
   }
 
