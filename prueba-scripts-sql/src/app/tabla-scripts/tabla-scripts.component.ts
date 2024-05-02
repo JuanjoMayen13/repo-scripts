@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class TablaScriptsComponent implements OnInit {
   selectedFolder: any;
-  //arreglos
+  //arreglos para las interfaces o models
   folderFiles: File[] = [];
   estadoArchivos: estadoArchivos[] = [];
   archivos: Archivos[] = [];
@@ -30,8 +30,13 @@ export class TablaScriptsComponent implements OnInit {
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'F1') {
-      event.preventDefault(); //Evita la accion por default de la tecla F1
+      event.preventDefault(); //se evita la accion por default de la tecla F1
       this.openFileExplorer();
+    } if (event.key === 'F2') {
+      console.log("Se ejecuto F2 para actualizar un scipt")
+    } if (event.key === 'F3'){
+      event.preventDefault();
+      console.log("Se ejecuto F3 para reemplazar un script") 
     }
   }
 
@@ -122,7 +127,7 @@ export class TablaScriptsComponent implements OnInit {
         fileSize.push(file.size.toString())
       }
 
-      // Envia los nombres de los archivos al servicio API
+      //Envia los nombres de los archivos al servicio API
       this.enviarNombresArchivos(fileNames);
     }
   }
