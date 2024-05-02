@@ -55,7 +55,8 @@ export class TablaScriptsComponent implements OnInit {
     //Suponiendo que el servicio de API devuelve el objeto EstadoArchivos
     this.apiQueriesService.verificarArchivos(nombresArchivos).subscribe(
       (data: estadoArchivos) => {
-        this.archivosEstado = data; // Asignar los datos recibidos a la variable archivosEstado
+        this.archivosEstado = data;
+        console.log(data); // Asignar los datos recibidos a la variable archivosEstado
       },
       error => {
         console.error('Error al obtener los archivos:', error);
