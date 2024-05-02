@@ -8,10 +8,11 @@
 
 
 body {
-            margin: 0;
-            padding: 0;
-            background-image: linear-gradient(to bottom, #ffffff, #e1e0fe, #bdc4fe, #8daaff, #3f92ff);
-            min-height: 100vh; /* Para que el fondo ocupe toda la altura de la ventana */
-            justify-content: center;
-            align-items: center;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to bottom, #ffffff, #e1e0fe, #bdc4fe, #8daaff, #3f92ff);
+    min-height: 100vh; /* Para que el fondo ocupe toda la altura de la ventana */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Oculta la barra de desplazamiento */
 }

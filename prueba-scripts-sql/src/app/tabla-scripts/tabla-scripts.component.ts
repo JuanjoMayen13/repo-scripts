@@ -1,10 +1,12 @@
 import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { ApiQueriesService } from '../services/api-queries.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-tabla-scripts',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './tabla-scripts.component.html',
   styleUrls: ['./tabla-scripts.component.css']
 })
@@ -16,9 +18,7 @@ export class TablaScriptsComponent implements OnInit {
 
   constructor(private apiQueriesService: ApiQueriesService) { }
 
-  ngOnInit(): void {
-    // Aquí puedes realizar cualquier inicialización necesaria
-  }
+  ngOnInit(): void { }
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
