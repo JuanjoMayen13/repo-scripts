@@ -24,35 +24,43 @@
             </div>
         </div>
 
-  <div class="mt-5"></div>
-  <!-- Tabla para mostrar los archivos seleccionados -->
-  <table class="border-collapse border border-gray-300 mt-40 ml-auto mr-auto" >
-    <thead>
-      <tr style="background-color: #BFE5EF;">
-        <th class="px-6 py-3">Seleccionar</th>
-        <th class="px-6 py-3">Nombre de archivo</th>
-        <th class="px-6 py-3">Fecha actualización</th>
-        <th class="px-6 py-3">Usuario</th>
-        <th class="px-6 py-3">Descripción</th>
-        <th class="px-6 py-3">Existe</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- usar *ngFor para iterar sobre una lista de archivos y mostrar en la tabla -->
-      <tr *ngFor="let iarchivo of archivos">
-           <td><input type="checkbox" [(ngModel)]="iarchivo.archivo"></td>
-           <td>{{ iarchivo.archivo }}</td>
-           <td>{{ iarchivo.fecha_Hora }}</td>
-           <td>{{ iarchivo.userName }}</td>
-           <td>{{ iarchivo.descripcion }}</td>
-       </tr>
-    </tbody>
+<div class="mt-8"></div>  
+<!-- Tabla para mostrar los archivos seleccionados -->
+<div class="overflow-y-auto max-w-xl mx-auto mb-8" style="max-height: 500px;">
+  <table class="min-w-max border-collapse border border-gray-300 mt-72">
+      <thead>
+          <tr class="bg-gray-200">
+              <th class="px-3 py-2 text-left" style="background-color: #BFE5EF;">Seleccionar</th>
+              <th class="px-3 py-2 text-left" style="background-color: #BFE5EF;">Nombre de archivo</th>
+              <th class="px-3 py-2 text-left" style="background-color: #BFE5EF;">Fecha actualización</th>
+              <th class="px-3 py-2 text-left" style="background-color: #BFE5EF;">Usuario</th>
+              <th class="px-3 py-2 text-left" style="background-color: #BFE5EF;">Descripción</th>
+              <th class="px-3 py-2 text-left" style="background-color: #BFE5EF;">Existe</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- Iterar sobre archivos guardados -->
+          <ng-container *ngFor="let archivo of archivosEstado.archivosGuardados" >
+              <tr>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;"><input type="checkbox"></td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">{{ archivo.archivo }}</td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">{{ archivo.fecha_Hora }}</td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">{{ archivo.userName }}</td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">{{ archivo.descripcion }}</td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">Si</td>
+              </tr>
+          </ng-container>
+          <!-- Iterar sobre archivos faltantes -->
+          <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes">
+              <tr>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;"><input type="checkbox"></td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">{{ archivo.archivo }}</td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">{{ archivo.fecha_Hora }}</td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">{{ archivo.userName }}</td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">{{ archivo.descripcion }}</td>
+                  <td class="border px-3 py-2" style="background-color: #fffcfc;">No</td>
+              </tr>
+          </ng-container>
+      </tbody>
   </table>
-
-
-
-<!-- 
-  <div *ngFor="let earchivos of estadoArchivos">
-    <p>{{estadoArchivos}}</p>
-  </div> -->
-  
+</div>
