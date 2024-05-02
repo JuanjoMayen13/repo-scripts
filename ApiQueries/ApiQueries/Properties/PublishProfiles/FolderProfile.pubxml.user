@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Practicas\Apis\ApiQueries\ApiQueries\bin\Release\net6.0\publish\</_PublishTargetUrl>
-    <History>True|2024-04-30T16:04:22.0645026Z;True|2024-04-29T11:18:08.8062012-06:00;True|2024-04-29T10:19:26.4023927-06:00;True|2024-04-29T10:19:01.5269126-06:00;True|2024-04-26T14:59:30.0698843-06:00;True|2024-04-26T14:59:18.7900485-06:00;</History>
+    <History>True|2024-05-02T15:16:00.0707356Z;True|2024-04-30T10:04:22.0645026-06:00;True|2024-04-29T11:18:08.8062012-06:00;True|2024-04-29T10:19:26.4023927-06:00;True|2024-04-29T10:19:01.5269126-06:00;True|2024-04-26T14:59:30.0698843-06:00;True|2024-04-26T14:59:18.7900485-06:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>
