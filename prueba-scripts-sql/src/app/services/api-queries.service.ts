@@ -1,7 +1,8 @@
 //
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
+import { Archivos, estadoArchivos } from '../models/verificar-archivo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,4 +15,15 @@ export class ApiQueriesService {
     const url = 'http://192.168.1.17:9093/api/Ctrl_VerificarArchivos';
     return this.http.post(url, nombresArchivos);
   }
+
+  public getArchivos(): Observable<Archivos[]>{
+    const url = 'http://192.168.1.17:9093/api/Ctrl_VerificarArchivos';
+    return this.http.get<Archivos[]>(url)
+  }
+
+  
+  // public getEstadoArchivos(): Observable<estadoArchivos[]>{
+  //   const url = 'http://192.168.1.18:9093/api/Ctrl_VerificarArchivos';
+  //   return this.http.get<estadoArchivos[]>(url)
+  // }
 }
