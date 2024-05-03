@@ -1,23 +1,35 @@
-<div class="general-styles">
-    <div class="mx-auto w-full sm:w-4/5 lg:w-3/5 xl:w-2/3">
-        <nav class="bg-gray-800 rounded-3xl fixed top-8 z-10 w-full sm:w-4/5 lg:w-3/5 xl:w-2/3 h-30 py-7" style="background-color: #DBD8D8;">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-                <!-- Logo -->
-                <a href="#" class="flex-shrink-0 flex items-center">
-                    <img class="h-10 w-auto" src="assets\logoDmosoft.png" alt="Logo">
-                </a>
-                
-                <!-- Texto centrado horizontalmente -->
-                <div class="flex items-center mx-auto">
-                    <div class="h-full mx-4 border-b-2 border-transparent"></div>
-                    <p class="text-3xl text-center">EJECUCIÓN DE SCRIPTS</p>
-                </div>          
-            </div>
-        </nav>
+<body style="overflow-y: auto;">
+    <div class="general-styles relative">
+        <!-- Contenedor transparente detrás del navbar -->
+        <div class="absolute inset-0 z-40 bg-white h-2"></div>
+        
+        <div class="mx-auto w-full sm:w-4/5 lg:w-3/5 xl:w-2/3 relative">
+            <nav class="navbar rounded-3xl fixed top-8 z-50 w-full sm:w-4/5 lg:w-3/5 xl:w-2/3 h-20 py-4 bg-gray-100 shadow-md">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+                    <!-- Logo -->
+                    <a href="#" class="flex-shrink-0 flex items-center">
+                        <img class="h-10 w-auto" src="assets/logoDmosoft.png" alt="Logo">
+                    </a>
+                    
+                    <!-- Texto centrado horizontalmente -->
+                    <div class="flex items-center mx-auto">
+                        <div class="h-full mx-4 border-b-2 border-gray-300"></div>
+                        <p class="text-2xl text-gray-800 font-semibold">EJECUCIÓN DE SCRIPTS</p>
+                    </div>          
+
+                    <!-- Botón de Usuario (ejemplo) -->
+                    <div class="flex items-center">
+                        <button class="text-gray-600 hover:text-gray-800 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+
+            <app-tabla-scripts></app-tabla-scripts>
+            <router-outlet></router-outlet>
+        </div>
     </div>
-</div>
-
-
-
-<app-tabla-scripts/>
-<router-outlet></router-outlet>
+</body>
