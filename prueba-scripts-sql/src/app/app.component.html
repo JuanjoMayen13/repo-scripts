@@ -1,8 +1,8 @@
-<body style="overflow-y: auto;">
+
     <div class="general-styles relative">
         <div class="mx-auto w-full sm:w-4/5 lg:w-3/5 xl:w-2/3 relative">
             <!-- Contenedor blanco detrás del navbar -->
-            <div class="fixed inset-x-0 top-0 z-50 bg-white h-10"></div>
+            <div class="fixed inset-x-0 top-0 z-50 h-10" style="background-color: #8BA5C6;"></div>
             
             <nav class="navbar rounded-3xl fixed top-8 z-50 w-full sm:w-4/5 lg:w-3/5 xl:w-2/3 h-20 py-4 bg-gray-100 shadow-md">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -17,20 +17,13 @@
                         <p class="text-2xl text-gray-800 font-semibold">EJECUCIÓN DE SCRIPTS</p>
                     </div>          
 
-                    <!-- Botón de Usuario (ejemplo) -->
-                    <div class="flex items-center">
-                        <button class="text-gray-600 hover:text-gray-800 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-                            </svg>
-                        </button>
-                    </div>
+                    
                 </div>
             </nav>
+        </div>
+    </div>
 
             <!-- Resto del contenido -->
             <app-tabla-scripts></app-tabla-scripts>
             <router-outlet></router-outlet>
-        </div>
-    </div>
-</body>
+
