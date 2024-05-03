@@ -14,5 +14,5 @@ body {
     min-height: 100vh; /* Para que el fondo ocupe toda la altura de la ventana */
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Oculta la barra de desplazamiento */
+    overflow: auto; /* Oculta la barra de desplazamiento */
 }
