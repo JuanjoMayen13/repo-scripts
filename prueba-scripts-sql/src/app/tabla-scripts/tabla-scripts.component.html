@@ -1,4 +1,5 @@
 <div class="flex max-w-full mx-auto mt-72 justify-center">
+    <!-- Card a la izquierda -->
     <div class="max-w-64 mx-auto rounded-xl shadow-md overflow-hidden mt-10 absolute left-10 top-72" style="background-color: #FFC100; margin-top: -20px;">  
         <div class="px-6 py-6 text-sky-900">
             <div class="font-bold text-xl mb-2 text-center">Botones</div>
@@ -7,71 +8,71 @@
                     #fileButton1 (click)="openFileExplorer()" type="button" multiple webkitdirectory>
                     <i class="fa-regular fa-folder-closed mr-2"></i>Seleccionar carpeta (F1)
                 </button>
-                <button class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-white duration-300" 
+                <div *ngIf="selectedFolder" class="text-sky-900 mt-4 text-center">
+                    <p>Carpeta seleccionada: {{ selectedFolder.webkitRelativePath.split('/')[0] }}</p>
+                
+                </div>
+                <button *ngIf="mostrarActualizar" class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-white duration-300 mt-2" 
                  #fileButton2 type="button" multiple webkitdirectory>
                 <i class="fa-solid fa-rotate-right mr-2"></i>Actualizar (F2)
                 </button>
-                <button class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  hover:text-whiteduration-300" 
+                <button *ngIf="mostrarReemplazar" class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  hover:text-white duration-300 mt-2" 
                  #fileButton2 type="button" multiple webkitdirectory>
                 <i class="fa-solid fa-repeat mr-2"></i>Reemplazar (F3)
-                
                 </button>
-                
             </div>
-            <div class="grid grid-cols-2 gap-4 place-items-stretch pt-8 ps-2">
-                <div class="inline-block">Nombre Servidor:</div> 
-                <div class="inline-block">Usuario:</div>
-                <div class="inline-block">Clave:</div> 
-                <div class="inline-block">DB:</div>
+            <div class=" pt-10 ps-2">
+                <div class="text-left ">Nombre Servidor:</div> 
+                <div class="text-left ">Usuario:</div>
+                <div class="text-left ">Clave:</div> 
+                <div class="text-left ">DB:</div>
             </div>
         </div>
-        
     </div>
 
-    <div class="overflow-y-auto border border-gray-200 dark:border-gray-300 md:rounded-lg"> 
-        <div class="table-header items-center text-white py-2 px-4" style="background-color: #d0d4da;">
-            <h1 class="text-2xl font-bold mb-4 text-center text-sky-900">Usuarios</h1>
-          </div>
-        <table class="w-full border-collapse border border-gray-300 overflow-y-scroll divide-gray-200 dark:divide-gray-700"> 
-            <thead class="">
-                <tr class="bg-gray-50 dark:bg-gray-50">
-                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Seleccionar</th>
-                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Nombre de archivo</th>
-                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Fecha actualización</th>
-                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Usuario</th>
-                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Descripción</th>
-                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Existe</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-200 dark:bg-gray-200">
-                <!-- Iterar sobre archivos guardados -->
-                <ng-container *ngFor="let archivo of archivosEstado.archivosGuardados">
-                    <tr class="bg-white">
-                        <td class=" px-4 font-normal  py-2 whitespace-nowrap"><input type="checkbox"></td>
-                        <td class="px-4 font-normal  py-2">{{ archivo.archivo }}</td>
-                        <td class="px-4 font-normal  py-2">{{ archivo.fecha_Hora }}</td>
-                        <td class="px-4 font-normal  py-2">{{ archivo.userName }}</td>
-                        <td class="px-4 font-normal  py-2 max-w-xs whitespace-normal">{{ archivo.descripcion }}</td>
-                        <div class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                            <td class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-esmerald-100/60">Si</td>
-                        </div> 
-                        
+    <!-- Contenedor para la tabla -->
+    <div class="relative">
+        <!-- Overflow-x-auto asegura que la tabla sea desplazable horizontalmente en dispositivos pequeños -->
+        <div class="overflow-x-auto border border-gray-200 dark:border-gray-300 md:rounded-lg mt-0 ml-72 mb-10"> 
+            <div class="table-header items-center text-white py-2 px-4" style="background-color: #d0d4da;">
+                <h1 class="text-2xl font-bold mb-4 text-center text-sky-900">Archivos</h1>
+            </div>
+            <table class="w-full border-collapse border border-gray-200 divide-gray-200 dark:border-gray-300 dark:divide-gray-700"> 
+                <thead class="">
+                    <tr class="bg-gray-50 dark:bg-gray-50">
+                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Seleccionar</th>
+                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Nombre de archivo</th>
+                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Fecha actualización</th>
+                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Usuario</th>
+                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Descripción</th>
+                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Existe</th>
                     </tr>
-                </ng-container>
-                <!-- Iterar sobre archivos faltantes -->
-                <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes">
-                    <tr class="bg-white">
-                        <td class=" px-4 font-normal  py-2"><input type="checkbox"></td>
-                        <td class=" px-4 font-normal  py-2">{{ archivo.archivo }}</td>
-                        <td class=" px-4 font-normal  py-2">{{ archivo.fecha_Hora }}</td>
-                        <td class=" px-4 font-normal  py-2">{{ archivo.userName }}</td>
-                        <td class=" px-4 py-2 font-normal  max-w-xs whitespace-normal">{{ archivo.descripcion }}</td> 
-                        <div class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                            <td class="inline px-3 py-1 text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60 dark:bg-red-100/60">No</td>
-                        </div>
-                    </tr>
-                </ng-container>
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-200 dark:bg-gray-200">
+                    <!-- Iterar sobre archivos guardados -->
+                    <ng-container *ngFor="let archivo of archivosEstado.archivosGuardados; let i = index">
+                        <tr class="bg-white">
+                            <td class="px-4 font-normal py-2 whitespace-nowrap"><input type="checkbox" [(ngModel)]="checkboxesArchivosGuardadosSeleccionados[i]" (change)="onCheckboxChange('guardados', i)"></td>
+                            <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.archivo }}</td>
+                            <td class="px-4 font-normal py-2">{{ archivo.fecha_Hora }}</td>
+                            <td class="px-4 font-normal py-2">{{ archivo.userName }}</td>
+                            <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.descripcion }}</td>
+                            <td class="px-4 font-normal py-2 inline-block text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-esmerald-100/60">Si</td>
+                        </tr>
+                    </ng-container>
+                    <!-- Iterar sobre archivos faltantes -->
+                    <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes; let i = index">
+                        <tr class="bg-white">
+                            <td class="px-4 font-normal py-2 whitespace-nowrap"><input type="checkbox" [(ngModel)]="checkboxesArchivosFaltantesSeleccionados[i]" (change)="onCheckboxChange('faltantes', i)"></td>
+                            <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.archivo }}</td>
+                            <td class="px-4 font-normal py-2">{{ archivo.fecha_Hora }}</td>
+                            <td class="px-4 font-normal py-2">{{ archivo.userName }}</td>
+                            <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.descripcion }}</td> 
+                            <td class="px-4 font-normal py-2 inline-block text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60 dark:bg-red-100/60">No</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

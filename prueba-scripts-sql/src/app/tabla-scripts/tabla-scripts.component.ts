@@ -18,8 +18,10 @@ export class TablaScriptsComponent implements OnInit {
   folderFiles: File[] = [];
   estadoArchivos: estadoArchivos[] = [];
   archivos: Archivos[] = [];
-
- 
+  mostrarActualizar: boolean = false;
+  mostrarReemplazar: boolean = false;
+  checkboxesArchivosGuardadosSeleccionados: boolean[] = [];
+  checkboxesArchivosFaltantesSeleccionados: boolean[] = [];
   
   archivosEstado: estadoArchivos = { archivosGuardados: [], archivosFaltantes: [] };
  
@@ -79,21 +81,28 @@ export class TablaScriptsComponent implements OnInit {
 
   selectFolder(event: any) {
     if (event.target.files.length > 0) {
-      this.selectedFolder = event.target.files[0];
-      console.log('Carpeta seleccionada:', this.selectedFolder);
-
-      if ('webkitRelativePath' in this.selectedFolder) {
-        const filesArray = Array.from(event.target.files) as File[];
-        this.folderFiles = filesArray.filter(file =>
-          file.webkitRelativePath.startsWith(this.selectedFolder.webkitRelativePath)
-        );
-
-        // Llama a enviarNombresArchivos con los nombres de archivos de la carpeta seleccionada
-        const fileNames = this.folderFiles.map(file => file.name);
-        this.enviarNombresArchivos(fileNames);
-      } else {
-        console.warn('La propiedad webkitRelativePath no está disponible en este navegador.');
+      // Selecciona el primer archivo (la carpeta)
+      const folder = event.target.files[0];
+  
+      // Guarda la carpeta seleccionada
+      this.selectedFolder = folder;
+  
+      // Filtra los archivos de la carpeta
+      const folderFiles: File[] = [];
+      for (let i = 0; i < event.target.files.length; i++) {
+        const file = event.target.files[i];
+        // Verifica si el archivo está dentro de la carpeta seleccionada
+        if (file.webkitRelativePath.startsWith(folder.webkitRelativePath)) {
+          folderFiles.push(file);
+        }
       }
+  
+      // Guarda los archivos de la carpeta
+      this.folderFiles = folderFiles;
+  
+      // Llama a enviarNombresArchivos con los nombres de archivos de la carpeta seleccionada
+      const fileNames = this.folderFiles.map(file => file.name);
+      this.enviarNombresArchivos(fileNames);
     }
   }
 
@@ -112,4 +121,36 @@ export class TablaScriptsComponent implements OnInit {
       this.enviarNombresArchivos(fileNames);
     }
   }
+
+  onCheckboxChange(tipo: string, index: number) {
+    if (tipo === 'guardados') {
+        // Deshabilitar los checkboxes de archivos faltantes
+        this.checkboxesArchivosFaltantesSeleccionados.fill(false);
+
+        // Verificar si al menos un archivo guardado está seleccionado
+        if (this.checkboxesArchivosGuardadosSeleccionados.some(checked => checked)) {
+        
+            this.mostrarReemplazar = true;
+        } else {
+       
+            this.mostrarReemplazar = false;
+        }
+        
+        this.mostrarActualizar = false;
+    } else if (tipo === 'faltantes') {
+        // Deshabilitar los checkboxes de archivos guardados
+        this.checkboxesArchivosGuardadosSeleccionados.fill(false);
+
+        // Verificar si al menos un archivo faltante está seleccionado
+        if (this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked)) {
+            
+            this.mostrarActualizar = true;
+        } else {
+   
+            this.mostrarActualizar = false;
+        }
+      
+        this.mostrarReemplazar = false;
+    }
+}
 }
