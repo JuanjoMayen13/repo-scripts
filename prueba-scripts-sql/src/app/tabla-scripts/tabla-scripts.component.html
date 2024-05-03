@@ -1,17 +1,17 @@
 <div class="flex max-w-full mx-auto mt-72 justify-center">
-    <div class="max-w-64 mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-10 absolute left-10 top-80 bg-sky-950" >
-        <div class="px-6 py-4 text-white">
+    <div class="max-w-64 mx-auto rounded-xl shadow-md overflow-hidden mt-10 absolute left-10 top-80" style="background-color: #FFC100;" >
+        <div class="px-6 py-4 text-sky-900">
             <div class="font-bold text-xl mb-2 text-center">Botones</div>
-            <div class="grid grid-cols-1 gap-4">
-                <button class="rounded-lg p-5 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:bg-amber-500 hover:text-blue-800 duration-300 " 
+            <div class="grid grid-cols-1 gap-4 text-white">
+                <button class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:bg-sky-900 hover:text-white duration-300 " 
                     #fileButton1 (click)="openFileExplorer()" type="button" multiple webkitdirectory>
                     <i class="fa-regular fa-folder-closed mr-2"></i>Seleccionar carpeta (F1)
                 </button>
-                <button class="rounded-lg p-5 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-amber-500 hover:text-blue-800 duration-300" 
+                <button class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-white duration-300" 
                  #fileButton2 type="button" multiple webkitdirectory>
                 <i class="fa-solid fa-rotate-right mr-2"></i>Actualizar (F2)
                 </button>
-                <button class="rounded-lg p-5 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-amber-500 hover:text-blue-800 duration-300" 
+                <button class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  hover:text-whiteduration-300" 
                  #fileButton2 type="button" multiple webkitdirectory>
                 <i class="fa-solid fa-repeat mr-2"></i>Reemplazar (F3)
                 </button>
@@ -26,39 +26,44 @@
         </div>
     </div>
 
-    <div class="overflow-y-auto"> <!-- Permitir el desplazamiento horizontal en caso necesario -->
-        <table class="w-full border-collapse border border-gray-300 overflow-y-scroll"> <!-- Cambié la clase "min-w-full" a "w-full" para que la tabla ocupe todo el ancho disponible -->
-            <thead>
-                <tr class="bg-gradient-to-r from-blue-200 to-blue-100">
-                    <th class="px-4 py-2 text-left text-blue-600">Seleccionar</th>
-                    <th class="px-4 py-2 text-left text-blue-600">Nombre de archivo</th>
-                    <th class="px-4 py-2 text-left text-blue-600">Fecha actualización</th>
-                    <th class="px-4 py-2 text-left text-blue-600">Usuario</th>
-                    <th class="px-4 py-2 text-left text-blue-600">Descripción</th> <!-- Modifiqué la clase de esta columna -->
-                    <th class="px-4 py-2 text-left text-blue-600">Existe</th>
+    <div class="overflow-y-auto border border-gray-200 dark:border-gray-300 md:rounded-lg"> 
+        <table class="w-full border-collapse border border-gray-300 overflow-y-scroll"> 
+            <thead class="">
+                <tr class="bg-gray-50 dark:bg-gray-50">
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Seleccionar</th>
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Nombre de archivo</th>
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Fecha actualización</th>
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Usuario</th>
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Descripción</th> <!-- Modifiqué la clase de esta columna -->
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Existe</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Iterar sobre archivos guardados -->
                 <ng-container *ngFor="let archivo of archivosEstado.archivosGuardados">
                     <tr class="bg-white">
-                        <td class="border px-4 py-2"><input type="checkbox"></td>
-                        <td class="border px-4 py-2">{{ archivo.archivo }}</td>
-                        <td class="border px-4 py-2">{{ archivo.fecha_Hora }}</td>
-                        <td class="border px-4 py-2">{{ archivo.userName }}</td>
-                        <td class="border px-4 py-2 max-w-xs">{{ archivo.descripcion }}</td> <!-- Añadí la clase max-w-xs para limitar el ancho -->
-                        <td class="rounded bg-green-400 py-1 px-2">Si</td>
+                        <td class="border px-4 font-normal  py-2 whitespace-nowrap"><input type="checkbox"></td>
+                        <td class="border px-4 font-normal  py-2">{{ archivo.archivo }}</td>
+                        <td class="border px-4 font-normal  py-2">{{ archivo.fecha_Hora }}</td>
+                        <td class="border px-4 font-normal  py-2">{{ archivo.userName }}</td>
+                        <td class="border px-4 font-normal  py-2 max-w-xs whitespace-normal">{{ archivo.descripcion }}</td>
+                        <div class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                            <td class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-esmerald-100/60">Si</td>
+                        </div> <!-- Añadí la clase max-w-xs para limitar el ancho -->
+                        
                     </tr>
                 </ng-container>
                 <!-- Iterar sobre archivos faltantes -->
                 <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes">
                     <tr class="bg-white">
-                        <td class="border px-4 py-2"><input type="checkbox"></td>
-                        <td class="border px-4 py-2">{{ archivo.archivo }}</td>
-                        <td class="border px-4 py-2">{{ archivo.fecha_Hora }}</td>
-                        <td class="border px-4 py-2">{{ archivo.userName }}</td>
-                        <td class="border px-4 py-2 max-w-xs">{{ archivo.descripcion }}</td> <!-- Añadí la clase max-w-xs para limitar el ancho -->
-                        <td class="rounded bg-red-400 py-1 px-2 ">No</td>
+                        <td class="border px-4 font-normal  py-2"><input type="checkbox"></td>
+                        <td class="border px-4 font-normal  py-2">{{ archivo.archivo }}</td>
+                        <td class="border px-4 font-normal  py-2">{{ archivo.fecha_Hora }}</td>
+                        <td class="border px-4 font-normal  py-2">{{ archivo.userName }}</td>
+                        <td class="border px-4 py-2 font-normal  max-w-xs whitespace-normal">{{ archivo.descripcion }}</td> 
+                        <div class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                            <td class="inline px-3 py-1 text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60 dark:bg-red-100/60">No</td>
+                        </div>
                     </tr>
                 </ng-container>
             </tbody>
