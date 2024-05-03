@@ -1,9 +1,9 @@
 <body style="overflow-y: auto;">
     <div class="general-styles relative">
-        <!-- Contenedor transparente detrás del navbar -->
-        <div class="absolute inset-0 z-40 bg-white h-2"></div>
-        
         <div class="mx-auto w-full sm:w-4/5 lg:w-3/5 xl:w-2/3 relative">
+            <!-- Contenedor blanco detrás del navbar -->
+            <div class="fixed inset-x-0 top-0 z-50 bg-white h-10"></div>
+            
             <nav class="navbar rounded-3xl fixed top-8 z-50 w-full sm:w-4/5 lg:w-3/5 xl:w-2/3 h-20 py-4 bg-gray-100 shadow-md">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
                     <!-- Logo -->
@@ -28,6 +28,7 @@
                 </div>
             </nav>
 
+            <!-- Resto del contenido -->
             <app-tabla-scripts></app-tabla-scripts>
             <router-outlet></router-outlet>
         </div>
