@@ -1,13 +1,12 @@
 ﻿using ApiQueries.Connection;
-using Microsoft.AspNetCore.Authorization;
+using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ApiQueries.Controllers
@@ -39,11 +38,31 @@ namespace ApiQueries.Controllers
 
                         using (var reader = new StreamReader(file.OpenReadStream()))
                         {
-                            var sqlScript = await reader.ReadToEndAsync();
-
-                            using (SqlCommand command = new SqlCommand(sqlScript, sqlConnection))
+                            string line;
+                            string command = "";
+                            while ((line = await reader.ReadLineAsync()) != null)
                             {
-                                await command.ExecuteNonQueryAsync();
+                                // Omitir líneas que contengan el comando GO
+                                if (line.Trim().ToUpper() == "GO")
+                                {
+                                    // Ejecutar el comando SQL acumulado
+                                    if (!string.IsNullOrEmpty(command))
+                                    {
+                                        await sqlConnection.ExecuteAsync(command);
+                                        command = "";
+                                    }
+                                }
+                                else
+                                {
+                                    // Acumular las líneas de comando SQL
+                                    command += line + Environment.NewLine;
+                                }
+                            }
+
+                            // Ejecutar el último comando SQL acumulado
+                            if (!string.IsNullOrEmpty(command))
+                            {
+                                await sqlConnection.ExecuteAsync(command);
                             }
                         }
                     }
