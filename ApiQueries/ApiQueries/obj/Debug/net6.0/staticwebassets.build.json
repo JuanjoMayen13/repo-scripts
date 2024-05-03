@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "P6oiWaLjLJMw0zypHuN0ybEzFqKddB+t5d0X6IUYhTs=",
+  "Hash": "NQDkaU8uvvE55fnHEZI/5AppuVoLdnH5sVIgntYi7pY=",
   "Source": "ApiQueries",
   "BasePath": "_content/ApiQueries",
   "Mode": "Default",
@@ -9,10 +9,10 @@
   "DiscoveryPatterns": [],
   "Assets": [
     {
-      "Identity": "C:\\Users\\dev003\\.nuget\\packages\\blazorinputfile\\0.2.0\\staticwebassets\\inputfile.js",
+      "Identity": "C:\\Users\\dev005\\.nuget\\packages\\blazorinputfile\\0.2.0\\staticwebassets\\inputfile.js",
       "SourceId": "BlazorInputFile",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\dev003\\.nuget\\packages\\blazorinputfile\\0.2.0\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\dev005\\.nuget\\packages\\blazorinputfile\\0.2.0\\staticwebassets\\",
       "BasePath": "_content/BlazorInputFile",
       "RelativePath": "inputfile.js",
       "AssetKind": "All",
@@ -23,7 +23,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\dev003\\.nuget\\packages\\blazorinputfile\\0.2.0\\staticwebassets\\inputfile.js"
+      "OriginalItemSpec": "C:\\Users\\dev005\\.nuget\\packages\\blazorinputfile\\0.2.0\\staticwebassets\\inputfile.js"
     }
   ]
 }
