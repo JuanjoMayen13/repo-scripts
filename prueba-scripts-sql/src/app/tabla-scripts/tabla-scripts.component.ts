@@ -178,15 +178,11 @@ export class TablaScriptsComponent implements OnInit {
     
     // Agrega los archivos seleccionados al FormData
     for (let i = 0; i < this.checkboxesArchivosFaltantesSeleccionados.length; i++) {
-      if (this.checkboxesArchivosFaltantesSeleccionados[i]) {
-        const archivo = this.archivosEstado.archivosFaltantes[i];
-        formData.append('sqlFiles', archivo.archivo);
-        formData.append('fechaHora', archivo.fecha_Hora);
-        formData.append('usuario', archivo.userName);
-        formData.append('descripcion', archivo.descripcion);
+      if (this.checkboxesArchivosFaltantesSeleccionados[i] && this.selectedFiles && this.selectedFiles[i]) {
+        formData.append('sqlFiles', this.selectedFiles[i]);
       }
     }
-    
+    console.log('FormData:', formData);
     // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
     this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
       (response) => {
@@ -197,22 +193,17 @@ export class TablaScriptsComponent implements OnInit {
       }
     );
   }
-  
   // Define el método que se ejecutará al presionar el botón de reemplazar
   onReemplazarClick() {
     const formData = new FormData();
     
     // Agrega los archivos seleccionados al FormData
     for (let i = 0; i < this.checkboxesArchivosGuardadosSeleccionados.length; i++) {
-      if (this.checkboxesArchivosGuardadosSeleccionados[i]) {
-        const archivo = this.archivosEstado.archivosGuardados[i];
-        formData.append('sqlFiles', archivo.archivo);
-        formData.append('fechaHora', archivo.fecha_Hora);
-        formData.append('usuario', archivo.userName);
-        formData.append('descripcion', archivo.descripcion);
+      if (this.checkboxesArchivosGuardadosSeleccionados[i] && this.selectedFiles && this.selectedFiles[i]) {
+        formData.append('sqlFiles', this.selectedFiles[i]);
       }
     }
-    
+    console.log('FormData:', formData);
     // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
     this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
       (response) => {
