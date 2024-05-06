@@ -22,6 +22,7 @@
     "@angular/router": "^17.2.0",
     "@angular/ssr": "^17.2.2",
     "@fortawesome/fontawesome-free": "^6.5.2",
+    "bootstrap": "^5.3.3",
     "express": "^4.18.2",
     "filepond": "^4.31.1",
     "filepond-plugin-file-validate-size": "^2.2.8",

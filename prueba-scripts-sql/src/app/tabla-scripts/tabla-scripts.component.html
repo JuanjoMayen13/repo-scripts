@@ -87,8 +87,8 @@
         </table>
     </div>
     <!-- Mensaje de carga o vacío -->
-    <div *ngIf="!carpetaSeleccionada" class="flex items-center justify-center h-full">
-        <p class="text-gray-500 text-lg">Cargando...</p>
+    <div *ngIf="selectedFolder && archivosEstado && !archivosEstado.archivosGuardados.length && !archivosEstado.archivosFaltantes.length" class="flex items-center justify-center h-full">
+<app-loading></app-loading>
     </div>
     <div *ngIf="!archivosEstado" class="flex items-center justify-center h-full">
         <p class="text-gray-500 text-lg">No hay archivos para mostrar.</p>
