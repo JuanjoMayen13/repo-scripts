@@ -54,11 +54,11 @@ export class TablaScriptsComponent implements OnInit {
       console.error('No se han seleccionado archivos para enviar.');
       return;
     }
-    //Suponiendo que el servicio de API devuelve el objeto EstadoArchivos
+    //El servicio de API devuelve el objeto EstadoArchivos
     this.apiQueriesService.verificarArchivos(nombresArchivos).subscribe(
       (data: estadoArchivos) => {
         this.archivosEstado = data;
-        console.log(data); // Asignar los datos recibidos a la variable archivosEstado
+        console.log(data); //Asignar los datos recibidos a la variable archivosEstado
       },
       error => {
         console.error('Error al obtener los archivos:', error);
@@ -81,13 +81,13 @@ export class TablaScriptsComponent implements OnInit {
 
   selectFolder(event: any) {
     if (event.target.files.length > 0) {
-      // Selecciona el primer archivo (la carpeta)
+      //Selecciona el primer archivo
       const folder = event.target.files[0];
   
-      // Guarda la carpeta seleccionada
+      //Guarda la carpeta seleccionada
       this.selectedFolder = folder;
   
-      // Filtra los archivos de la carpeta
+      //Filtra los archivos de la carpeta
       const folderFiles: File[] = [];
       for (let i = 0; i < event.target.files.length; i++) {
         const file = event.target.files[i];
@@ -97,10 +97,10 @@ export class TablaScriptsComponent implements OnInit {
         }
       }
   
-      // Guarda los archivos de la carpeta
+      //Guarda los archivos de la carpeta
       this.folderFiles = folderFiles;
   
-      // Llama a enviarNombresArchivos con los nombres de archivos de la carpeta seleccionada
+      //Llama a enviarNombresArchivos con los nombres de archivos de la carpeta seleccionada
       const fileNames = this.folderFiles.map(file => file.name);
       this.enviarNombresArchivos(fileNames);
     }

@@ -1,16 +1,15 @@
-<div class="flex max-w-full mx-auto mt-72 justify-center">
+<div class="flex max-w-full mx-auto mt-40 justify-center relative">
     <!-- Card a la izquierda -->
-    <div class="max-w-64 mx-auto rounded-xl shadow-md overflow-hidden mt-10 absolute left-10 top-72" style="background-color: #FFC100; margin-top: -20px;">  
+    <div class="max-w-64 mx-auto rounded-xl shadow-md overflow-hidden mt-10 absolute left-10 top-20" style="background-color: #FFC100; margin-top: -20px;">  
         <div class="px-6 py-6 text-sky-900">
             <div class="font-bold text-xl mb-2 text-center">Botones</div>
             <div class="grid grid-cols-1 gap-4 text-white">
-                <button class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:bg-sky-900 hover:text-white duration-300 " 
+                <button class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-sky-900 hover:text-white duration-300 " 
                     #fileButton1 (click)="openFileExplorer()" type="button" multiple webkitdirectory>
                     <i class="fa-regular fa-folder-closed mr-2"></i>Seleccionar carpeta (F1)
                 </button>
                 <div *ngIf="selectedFolder" class="text-sky-900 mt-4 text-center">
                     <p>Carpeta seleccionada: {{ selectedFolder.webkitRelativePath.split('/')[0] }}</p>
-                
                 </div>
                 <button *ngIf="mostrarActualizar" class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-white duration-300 mt-2" 
                  #fileButton2 type="button" multiple webkitdirectory>
@@ -21,14 +20,26 @@
                 <i class="fa-solid fa-repeat mr-2"></i>Reemplazar (F3)
                 </button>
             </div>
-            <div class=" pt-10 ps-2">
+            <div class="pt-36 ps-2">
                 <div class="text-left ">Nombre Servidor:</div> 
                 <div class="text-left ">Usuario:</div>
                 <div class="text-left ">Clave:</div> 
                 <div class="text-left ">DB:</div>
             </div>
+            <!-- Botones de ayuda y guía de errores -->
+            <div class="flex justify-center mt-10">
+                <a href="https://docs.google.com/document/d/1qFOl2g9CmsSMGxZ2xaeH2grh_uphFJGdI2FVvf_hu54/edit?usp=sharing" target="_blank" class="bg-blue-500 text-white font-bold py-1 px-2 rounded text-sm transition-all ease-in-out duration-300 transform hover:bg-blue-700 hover:-translate-y-1 hover:scale-110 mr-2">
+                    <i class="fas fa-question-circle"></i>
+                    Ayuda
+                </a>
+                <a href="https://docs.google.com/document/d/10D_27zr3KJ5MHVoqKXBHsmFLFukrUY7o5ul6SdFoBlY/edit?usp=sharing" target="_blank" class="bg-red-500 text-white font-bold py-1 px-2 rounded text-sm transition-all ease-in-out duration-300 transform hover:bg-red-700 hover:-translate-y-1 hover:scale-110">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    Guía errores
+                </a>
+            </div>
         </div>
     </div>
+
 
     <!-- Contenedor para la tabla -->
     <div class="relative">
