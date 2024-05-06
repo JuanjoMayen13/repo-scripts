@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Practicas\\Apis\\ApiQueries\\ApiQueries\\ApiQueries.csproj": {}
+    "C:\\Users\\dev005\\Desktop\\Angular\\repo-scripts\\ApiQueries\\ApiQueries\\ApiQueries.csproj": {}
   },
   "projects": {
-    "C:\\Practicas\\Apis\\ApiQueries\\ApiQueries\\ApiQueries.csproj": {
+    "C:\\Users\\dev005\\Desktop\\Angular\\repo-scripts\\ApiQueries\\ApiQueries\\ApiQueries.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Practicas\\Apis\\ApiQueries\\ApiQueries\\ApiQueries.csproj",
+        "projectUniqueName": "C:\\Users\\dev005\\Desktop\\Angular\\repo-scripts\\ApiQueries\\ApiQueries\\ApiQueries.csproj",
         "projectName": "ApiQueries",
-        "projectPath": "C:\\Practicas\\Apis\\ApiQueries\\ApiQueries\\ApiQueries.csproj",
-        "packagesPath": "C:\\Users\\dev003\\.nuget\\packages\\",
-        "outputPath": "C:\\Practicas\\Apis\\ApiQueries\\ApiQueries\\obj\\",
+        "projectPath": "C:\\Users\\dev005\\Desktop\\Angular\\repo-scripts\\ApiQueries\\ApiQueries\\ApiQueries.csproj",
+        "packagesPath": "C:\\Users\\dev005\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dev005\\Desktop\\Angular\\repo-scripts\\ApiQueries\\ApiQueries\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\dev003\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dev005\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
