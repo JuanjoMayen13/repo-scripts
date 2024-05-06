@@ -23,6 +23,7 @@ export class TablaScriptsComponent implements OnInit {
   checkboxesArchivosGuardadosSeleccionados: boolean[] = [];
   checkboxesArchivosFaltantesSeleccionados: boolean[] = [];
 
+  nombreArchivoSeleccionado: string = '';
   
   archivosEstado: estadoArchivos = { archivosGuardados: [], archivosFaltantes: [] };
  
@@ -34,6 +35,8 @@ export class TablaScriptsComponent implements OnInit {
   ordenarArchivosPorNombre(archivos: any[]): any[] {
     return archivos.sort((a, b) => a.archivo.localeCompare(b.archivo));
   }
+
+
   ngOnInit(): void {
     this.archivosEstado.archivosGuardados = this.ordenarArchivosPorNombre(this.archivosEstado.archivosGuardados);
     // Ordenar archivos faltantes
@@ -127,66 +130,56 @@ export class TablaScriptsComponent implements OnInit {
 
   onCheckboxChange(tipo: string, index: number) {
     if (tipo === 'guardados') {
-      // Deshabilitar los checkboxes de archivos faltantes
       this.checkboxesArchivosFaltantesSeleccionados.fill(false);
-      // Verificar si al menos un archivo guardado está seleccionado
+      const archivo = this.archivosEstado.archivosGuardados[index];
+      this.nombreArchivoSeleccionado = archivo.archivo; // Almacena el nombre del archivo
       this.mostrarReemplazar = this.checkboxesArchivosGuardadosSeleccionados.some(checked => checked);
       this.mostrarActualizar = false;
     } else if (tipo === 'faltantes') {
-      // Deshabilitar los checkboxes de archivos guardados
+      const archivo = this.archivosEstado.archivosFaltantes[index];
       this.checkboxesArchivosGuardadosSeleccionados.fill(false);
-      // Verificar si al menos un archivo faltante está seleccionado
+      this.nombreArchivoSeleccionado = archivo.archivo; // Almacena el nombre del archivo
       this.mostrarActualizar = this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked);
       this.mostrarReemplazar = false;
     }
   }
-  
+
   onActualizarClick() {
-  const formData = new FormData();
+    const formData = new FormData();
+    
+    // Agrega el nombre del archivo seleccionado al FormData
+    if (this.nombreArchivoSeleccionado) {
+      formData.append('sqlFiles', this.nombreArchivoSeleccionado);
+      console.log('Archivo seleccionado para actualizar:', this.nombreArchivoSeleccionado);
+    }
   
-  // Agrega los archivos seleccionados y marcados como faltantes al FormData
-  if (this.selectedFiles) {
-    Array.from(this.selectedFiles).forEach((file: File, index: number) => {
-      if (this.checkboxesArchivosFaltantesSeleccionados[index] && file instanceof File) {
-        formData.append('sqlFiles', file);
-        console.log('Archivo seleccionado para actualizar:', file);
+    console.log('FormData:', formData);
+    this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
+      (response) => {
+        console.log(response); // Manejar respuesta exitosa
+      },
+      (error) => {
+        console.error(error); // Manejar error
       }
-    });
+    );
   }
 
-  console.log('FormData:', formData);
-  // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
-  this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
-    (response) => {
-      console.log(response); // Manejar respuesta exitosa
-    },
-    (error) => {
-      console.error(error); // Manejar error
+  onReemplazarClick() {
+    const formData = new FormData();
+    
+    // Agrega el nombre del archivo seleccionado al FormData
+    if (this.nombreArchivoSeleccionado) {
+      formData.append('sqlFiles', this.nombreArchivoSeleccionado);
+      console.log('Archivo seleccionado para reemplazar:', this.nombreArchivoSeleccionado);
     }
-  );
-}
-
-onReemplazarClick() {
-  const formData = new FormData();
-  
-  // Agrega los archivos seleccionados y marcados como guardados al FormData
-  if (this.selectedFiles) {
-    Array.from(this.selectedFiles).forEach((file: File, index: number) => {
-      if (this.checkboxesArchivosGuardadosSeleccionados[index] && file instanceof File) {
-        formData.append('sqlFiles', file);
-        console.log('Archivo seleccionado para reemplazar:', file);
+    
+    this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
+      (response) => {
+        console.log(response); // Manejar respuesta exitosa
+      },
+      (error) => {
+        console.error(error); // Manejar error
       }
-    });
+    );
   }
-  
-  // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
-  this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
-    (response) => {
-      console.log(response); // Manejar respuesta exitosa
-    },
-    (error) => {
-      console.error(error); // Manejar error
-    }
-  );
-}
 }
