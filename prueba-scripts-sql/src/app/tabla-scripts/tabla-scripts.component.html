@@ -11,11 +11,11 @@
                 <div *ngIf="selectedFolder" class="text-sky-900 mt-4 text-center">
                     <p>Carpeta seleccionada: {{ selectedFolder.webkitRelativePath.split('/')[0] }}</p>
                 </div>
-                <button *ngIf="mostrarActualizar" class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-white duration-300 mt-2" 
+                <button *ngIf="mostrarActualizar" (click)="onActualizarClick()" class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-white duration-300 mt-2" 
                  #fileButton2 type="button" multiple webkitdirectory>
                 <i class="fa-solid fa-rotate-right mr-2"></i>Actualizar (F2)
                 </button>
-                <button *ngIf="mostrarReemplazar" class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  hover:text-white duration-300 mt-2" 
+                <button *ngIf="mostrarReemplazar" (click)="onReemplazarClick()" class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  hover:text-white duration-300 mt-2" 
                  #fileButton2 type="button" multiple webkitdirectory>
                 <i class="fa-solid fa-repeat mr-2"></i>Reemplazar (F3)
                 </button>
@@ -43,7 +43,6 @@
 
     <!-- Contenedor para la tabla -->
     <div class="relative">
-        <!-- Overflow-x-auto asegura que la tabla sea desplazable horizontalmente en dispositivos pequeños -->
         <div class="overflow-x-auto border border-gray-200 dark:border-gray-300 md:rounded-lg mt-0 ml-72 mb-10"> 
             <div class="table-header items-center text-white py-2 px-4" style="background-color: #d0d4da;">
                 <h1 class="text-2xl font-bold mb-4 text-center text-sky-900">Archivos</h1>
