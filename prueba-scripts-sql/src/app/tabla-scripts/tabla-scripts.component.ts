@@ -22,7 +22,7 @@ export class TablaScriptsComponent implements OnInit {
   mostrarReemplazar: boolean = false;
   checkboxesArchivosGuardadosSeleccionados: boolean[] = [];
   checkboxesArchivosFaltantesSeleccionados: boolean[] = [];
-  carpetaSeleccionada: boolean = false; 
+
   
   archivosEstado: estadoArchivos = { archivosGuardados: [], archivosFaltantes: [] };
  
@@ -80,7 +80,7 @@ export class TablaScriptsComponent implements OnInit {
 
   selectFolder(event: any) {
     if (event.target.files.length > 0) {
-      this.carpetaSeleccionada = true;
+
       const folder = event.target.files[0];
       this.selectedFolder = folder;
       // Filtra los archivos de la carpeta
