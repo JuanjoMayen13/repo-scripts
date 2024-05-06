@@ -25,5 +25,4 @@ export class ApiQueriesService {
     const url = 'http://192.168.1.34:9093/api/Ctrl_EjecucionQueries';
     return this.http.post(url, sqlFiles);
   }
-
 }
