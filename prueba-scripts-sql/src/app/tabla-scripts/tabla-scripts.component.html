@@ -42,47 +42,57 @@
 
 
     <!-- Contenedor para la tabla -->
-    <div class="relative">
-        <div class="overflow-x-auto border border-gray-200 dark:border-gray-300 md:rounded-lg mt-0 ml-72 mb-10"> 
-            <div class="table-header items-center text-white py-2 px-4" style="background-color: #d0d4da;">
-                <h1 class="text-2xl font-bold mb-4 text-center text-sky-900">Archivos</h1>
-            </div>
-            <table class="w-full border-collapse border border-gray-200 divide-gray-200 dark:border-gray-300 dark:divide-gray-700"> 
-                <thead class="">
-                    <tr class="bg-gray-50 dark:bg-gray-50">
-                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Seleccionar</th>
-                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Nombre de archivo</th>
-                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Fecha actualización</th>
-                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Usuario</th>
-                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Descripción</th>
-                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Existe</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-200 dark:bg-gray-200">
-                    <!-- Iterar sobre archivos guardados -->
-                    <ng-container *ngFor="let archivo of archivosEstado.archivosGuardados; let i = index">
-                        <tr class="bg-white">
-                            <td class="px-4 font-normal py-2 whitespace-nowrap"><input type="checkbox" [(ngModel)]="checkboxesArchivosGuardadosSeleccionados[i]" (change)="onCheckboxChange('guardados', i)"></td>
-                            <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.archivo }}</td>
-                            <td class="px-4 font-normal py-2">{{ archivo.fecha_Hora }}</td>
-                            <td class="px-4 font-normal py-2">{{ archivo.userName }}</td>
-                            <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.descripcion }}</td>
-                            <td class="px-4 font-normal py-2 inline-block text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-esmerald-100/60">Si</td>
-                        </tr>
-                    </ng-container>
-                    <!-- Iterar sobre archivos faltantes -->
-                    <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes; let i = index">
-                        <tr class="bg-white">
-                            <td class="px-4 font-normal py-2 whitespace-nowrap"><input type="checkbox" [(ngModel)]="checkboxesArchivosFaltantesSeleccionados[i]" (change)="onCheckboxChange('faltantes', i)"></td>
-                            <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.archivo }}</td>
-                            <td class="px-4 font-normal py-2">{{ archivo.fecha_Hora }}</td>
-                            <td class="px-4 font-normal py-2">{{ archivo.userName }}</td>
-                            <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.descripcion }}</td> 
-                            <td class="px-4 font-normal py-2 inline-block text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60 dark:bg-red-100/60">No</td>
-                        </tr>
-                    </ng-container>
-                </tbody>
-            </table>
+    <!-- Contenedor para la tabla -->
+<div class="relative">
+    <!-- Overflow-x-auto asegura que la tabla sea desplazable horizontalmente en dispositivos pequeños -->
+    <div *ngIf="archivosEstado && (archivosEstado.archivosGuardados.length > 0 || archivosEstado.archivosFaltantes.length > 0)" class="overflow-x-auto border border-gray-200 dark:border-gray-300 md:rounded-lg mt-0 ml-72 mb-10"> 
+        <div class="table-header items-center text-white py-2 px-4" style="background-color: #d0d4da;">
+            <h1 class="text-2xl font-bold mb-4 text-center text-sky-900">Archivos</h1>
         </div>
+        <table class="w-full border-collapse border border-gray-400 divide-gray-400 "> 
+            <thead class="">
+                <tr class="bg-gray-50 dark:bg-gray-50">
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Seleccionar</th>
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Nombre de archivo</th>
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Fecha actualización</th>
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Usuario</th>
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Descripción</th>
+                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Existe</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-400">
+                <!-- Iterar sobre archivos guardados -->
+                <ng-container *ngFor="let archivo of archivosEstado.archivosGuardados; let i = index">
+                    <tr class="bg-white">
+                        <td class="px-4 font-normal py-2 whitespace-nowrap"><input type="checkbox" [(ngModel)]="checkboxesArchivosGuardadosSeleccionados[i]" (change)="onCheckboxChange('guardados', i)"></td>
+                        <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.archivo }}</td>
+                        <td class="px-4 font-normal py-2">{{ archivo.fecha_Hora }}</td>
+                        <td class="px-4 font-normal py-2">{{ archivo.userName }}</td>
+                        <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.descripcion }}</td>
+                        <td class="px-4 font-normal py-2 inline-block text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-esmerald-100/60">Si</td>
+                    </tr>
+                </ng-container>
+                <!-- Iterar sobre archivos faltantes -->
+                <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes; let i = index">
+                    <tr class="bg-white">
+                        <td class="px-4 font-normal py-2 whitespace-nowrap"><input type="checkbox" [(ngModel)]="checkboxesArchivosFaltantesSeleccionados[i]" (change)="onCheckboxChange('faltantes', i)"></td>
+                        <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.archivo }}</td>
+                        <td class="px-4 font-normal py-2">{{ archivo.fecha_Hora }}</td>
+                        <td class="px-4 font-normal py-2">{{ archivo.userName }}</td>
+                        <td class="px-4 font-normal py-2 max-w-xs whitespace-normal">{{ archivo.descripcion }}</td> 
+                        <td class="px-4 font-normal py-2 inline-block text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60 dark:bg-red-100/60">No</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
     </div>
+    <!-- Mensaje de carga o vacío -->
+    <div *ngIf="selectedFolder && archivosEstado && !archivosEstado.archivosGuardados.length && !archivosEstado.archivosFaltantes.length" class="flex items-center justify-center h-full">
+<app-loading></app-loading>
+    </div>
+    <div *ngIf="!archivosEstado" class="flex items-center justify-center h-full">
+        <p class="text-gray-500 text-lg">No hay archivos para mostrar.</p>
+    </div>
+</div>
+
 </div>

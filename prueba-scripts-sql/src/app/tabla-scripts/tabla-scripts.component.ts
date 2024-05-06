@@ -3,12 +3,12 @@ import { ApiQueriesService } from '../services/api-queries.service';
 import { CommonModule } from '@angular/common';
 import { Archivos, estadoArchivos  } from '../models/verificar-archivo.model';
 import { FormsModule } from '@angular/forms';
-
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-tabla-scripts',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,LoadingComponent ],
   templateUrl: './tabla-scripts.component.html',
   styleUrls: ['./tabla-scripts.component.css']
 })
@@ -22,6 +22,7 @@ export class TablaScriptsComponent implements OnInit {
   mostrarReemplazar: boolean = false;
   checkboxesArchivosGuardadosSeleccionados: boolean[] = [];
   checkboxesArchivosFaltantesSeleccionados: boolean[] = [];
+  carpetaSeleccionada: boolean = false; 
   
   archivosEstado: estadoArchivos = { archivosGuardados: [], archivosFaltantes: [] };
  
@@ -79,7 +80,7 @@ export class TablaScriptsComponent implements OnInit {
 
   selectFolder(event: any) {
     if (event.target.files.length > 0) {
-   
+      this.carpetaSeleccionada = true;
       const folder = event.target.files[0];
       this.selectedFolder = folder;
       // Filtra los archivos de la carpeta
