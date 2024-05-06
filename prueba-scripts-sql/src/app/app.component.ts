@@ -6,12 +6,13 @@ import 'filepond/dist/filepond.css';
 import 'filepond-plugin-file-validate-size';
 import 'filepond-plugin-file-validate-type';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TablaScriptsComponent, HttpClientModule],
+  imports: [RouterOutlet, TablaScriptsComponent, HttpClientModule, LoadingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
