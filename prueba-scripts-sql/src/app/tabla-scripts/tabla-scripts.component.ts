@@ -163,39 +163,66 @@ export class TablaScriptsComponent implements OnInit {
   
   
   onActualizarClick() {
-    if (this.archivoSeleccionado) {
-      const formData = new FormData();
-      formData.append('sqlFile', this.archivoSeleccionado);
-      console.log('Archivo seleccionado para actualizar:', this.archivoSeleccionado.name);
-
-      this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
-        (response) => {
-          console.log(response); // Manejar respuesta exitosa
-        },
-        (error) => {
-          console.error(error); // Manejar error
+    const formData = new FormData();
+  
+    // Agrega los archivos seleccionados y marcados como faltantes al FormData
+    if (this.selectedFiles) {
+      Array.from(this.selectedFiles).forEach((file: File, index: number) => {
+        if (this.checkboxesArchivosFaltantesSeleccionados[index] && file instanceof File) {
+          formData.append('sqlFiles', file); // Guarda el archivo en el FormData
+          console.log('Archivo seleccionado para actualizar:', file);
         }
-      );
-    } else {
-      console.error('No se ha seleccionado ningún archivo para actualizar.');
+      });
     }
+  
+    console.log('FormData antes de enviar:', formData); // Imprime el FormData antes de enviar la solicitud
+  
+    // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
+    this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
+      (response) => {
+        console.log(response); // Manejar respuesta exitosa
+      },
+      (error) => {
+        console.error(error); // Manejar error
+      }
+    );
   }
+
   onReemplazarClick() {
-    if (this.archivoSeleccionado) {
-      const formData = new FormData();
-      formData.append('sqlFile', this.archivoSeleccionado);
-      console.log('Archivo seleccionado para reemplazar:', this.archivoSeleccionado.name);
-
-      this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
-        (response) => {
-          console.log(response); // Manejar respuesta exitosa
-        },
-        (error) => {
-          console.error(error); // Manejar error
-        }
-      );
-    } else {
-      console.error('No se ha seleccionado ningún archivo para reemplazar.');
-    }
+    const formData = new FormData();
+  
+    // Obtener los nombres de los archivos seleccionados para reemplazar
+    const nombresArchivosSeleccionados = this.archivosEstado.archivosGuardados
+      .filter((archivo, index) => this.checkboxesArchivosGuardadosSeleccionados[index])
+      .map((archivo) => archivo.archivo);
+  
+    console.log('Nombres de archivos seleccionados:', nombresArchivosSeleccionados);
+  
+    // Buscar los archivos faltantes correspondientes a los archivos seleccionados
+    const archivosFaltantesSeleccionados = this.archivosEstado.archivosFaltantes
+      .filter((archivo) => nombresArchivosSeleccionados.includes(archivo.archivo));
+  
+    console.log('Archivos faltantes seleccionados:', archivosFaltantesSeleccionados);
+  
+    // Agregar los archivos faltantes seleccionados al FormData
+    archivosFaltantesSeleccionados.forEach((archivo) => {
+      formData.append('sqlFiles', archivo.archivo); // Agregar el nombre del archivo al FormData
+    });
+  
+    console.log('FormData antes de enviar:', formData);
+  
+    // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
+    this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
+      (response) => {
+        console.log(response); // Manejar respuesta exitosa
+      },
+      (error) => {
+        console.error(error); // Manejar error
+      }
+    );
   }
+  
+  
+  
+
 }
