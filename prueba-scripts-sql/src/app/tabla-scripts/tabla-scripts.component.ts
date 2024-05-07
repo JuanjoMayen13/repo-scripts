@@ -174,84 +174,82 @@ onCheckboxChange(tipo: string, index: number) {
     this.mostrarActualizar = this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked);
   }
 }
-
   
-  
- onActualizarClick() {
-  const formData = new FormData();
+  onActualizarClick() {
+    const formData = new FormData();
 
-  // Agregar los archivos seleccionados y marcados como faltantes al FormData
-  if (this.selectedFiles) {
-    Array.from(this.selectedFiles).forEach((file: File, index: number) => {
-      if (this.checkboxesArchivosFaltantesSeleccionados[index] && file instanceof File) {
-        formData.append('sqlFiles', file); // Agregar el archivo al FormData
-        console.log('Archivo seleccionado para actualizar:', file);
+    // Obtener los nombres de los archivos seleccionados para reemplazar
+    const nombresArchivosSeleccionados = this.archivosEstado.archivosFaltantes
+      .filter((archivo, index) => this.checkboxesArchivosFaltantesSeleccionados[index])
+      .map((archivo) => archivo.archivo);
+
+    console.log('Nombres de archivos seleccionados:', nombresArchivosSeleccionados);
+
+    // Buscar los archivos guardados correspondientes a los archivos seleccionados
+    const archivosFaltantesSeleccionados = this.archivosEstado.archivosFaltantes
+      .filter((archivo) => nombresArchivosSeleccionados.includes(archivo.archivo))
+      .map((archivo) => archivo.archivo);
+
+    console.log('Archivos guardados seleccionados:', archivosFaltantesSeleccionados);
+
+    // Agregar los archivos guardados seleccionados al FormData
+    archivosFaltantesSeleccionados.forEach((nombreArchivo) => {
+      // Buscar el archivo en la lista de archivos seleccionados
+      const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === nombreArchivo);
+      if (selectedFile) {
+        formData.append('sqlFiles', selectedFile);
       }
     });
+
+    console.log('FormData antes de enviar:', formData);
+
+    // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
+    this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
+      (response) => {
+        console.log(response); // Manejar respuesta exitosa
+      },
+      (error) => {
+        console.error(error); // Manejar error
+      }
+    );
   }
 
-  console.log('FormData antes de enviar:', formData); // Mostrar FormData antes de enviar la solicitud
+  onReemplazarClick() {
+    const formData = new FormData();
 
-  // Llamar al método para ejecutar los archivos SQL con el FormData como parámetro
-  this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
-    (response) => {
-      console.log(response); // Manejar respuesta exitosa
-    },
-    (error) => {
-      console.error(error); // Manejar error
-    }
-  );
-}
+    // Obtener los nombres de los archivos seleccionados para reemplazar
+    const nombresArchivosSeleccionados = this.archivosEstado.archivosGuardados
+      .filter((archivo, index) => this.checkboxesArchivosGuardadosSeleccionados[index])
+      .map((archivo) => archivo.archivo);
 
-onReemplazarClick() {
-  const formData = new FormData();
+    console.log('Nombres de archivos seleccionados:', nombresArchivosSeleccionados);
 
-  // Obtener los nombres de los archivos guardados seleccionados
-  const nombresArchivosGuardadosSeleccionados = this.archivosEstado.archivosGuardados
-    .filter((archivo, index) => this.checkboxesArchivosGuardadosSeleccionados[index])
-    .map((archivo) => archivo.archivo);
+    // Buscar los archivos guardados correspondientes a los archivos seleccionados
+    const archivosGuardadosSeleccionados = this.archivosEstado.archivosGuardados
+      .filter((archivo) => nombresArchivosSeleccionados.includes(archivo.archivo))
+      .map((archivo) => archivo.archivo);
 
-  console.log('Nombres de archivos guardados seleccionados:', nombresArchivosGuardadosSeleccionados);
+    console.log('Archivos guardados seleccionados:', archivosGuardadosSeleccionados);
 
-  // Agregar los archivos guardados seleccionados al FormData
-  nombresArchivosGuardadosSeleccionados.forEach((nombreArchivo) => {
-    const archivoSeleccionado = this.archivosEstado.archivosGuardados.find(archivo => archivo.archivo === nombreArchivo);
-    if (archivoSeleccionado) {
-      const file = new File([archivoSeleccionado.archivo], archivoSeleccionado.archivo);
-      formData.append('sqlFiles', file);
-    }
-  });
+    // Agregar los archivos guardados seleccionados al FormData
+    archivosGuardadosSeleccionados.forEach((nombreArchivo) => {
+      // Buscar el archivo en la lista de archivos seleccionados
+      const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === nombreArchivo);
+      if (selectedFile) {
+        formData.append('sqlFiles', selectedFile);
+      }
+    });
 
-  // Obtener los nombres de los archivos faltantes seleccionados
-  const nombresArchivosFaltantesSeleccionados = this.archivosEstado.archivosFaltantes
-    .filter((archivo, index) => this.checkboxesArchivosFaltantesSeleccionados[index])
-    .map((archivo) => archivo.archivo);
+    console.log('FormData antes de enviar:', formData);
 
-  console.log('Nombres de archivos faltantes seleccionados:', nombresArchivosFaltantesSeleccionados);
-
-  // Agregar los archivos faltantes seleccionados al FormData
-  nombresArchivosFaltantesSeleccionados.forEach((nombreArchivo) => {
-    const archivoSeleccionado = this.archivosEstado.archivosFaltantes.find(archivo => archivo.archivo === nombreArchivo);
-    if (archivoSeleccionado) {
-      const file = new File([archivoSeleccionado.archivo], archivoSeleccionado.archivo);
-      formData.append('sqlFiles', file);
-    }
-  });
-
-  console.log('FormData antes de enviar:', formData);
-
-  // Llamar al método para ejecutar los archivos SQL con el FormData como parámetro
-  this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
-    (response) => {
-      console.log(response); // Manejar respuesta exitosa
-    },
-    (error) => {
-      console.error(error); // Manejar error
-    }
-  );
-}
-
-
-  
-
+    // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
+    this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
+      (response) => {
+        console.log(response); // Manejar respuesta exitosa
+      },
+      (error) => {
+        console.error(error); // Manejar error
+      }
+    );
+  }
 }
