@@ -131,35 +131,50 @@ export class TablaScriptsComponent implements OnInit {
   }
 
   
-
-  onCheckboxChange(tipo: string, index: number) {
-    if (tipo === 'guardados') {
-      const archivo = this.archivosEstado.archivosGuardados[index];
-      const fileName = archivo.archivo;
-      const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === fileName);
-      if (selectedFile) {
-        this.archivoSeleccionado = selectedFile;
-        console.log('Archivo guardado seleccionado:', this.archivoSeleccionado);
-      } else {
-        console.error('El archivo guardado no se encontró en la lista de archivos seleccionados.');
-      }
-      this.mostrarReemplazar = this.checkboxesArchivosGuardadosSeleccionados.some(checked => checked);
+onCheckboxChange(tipo: string, index: number) {
+  if (tipo === 'guardados') {
+    // Verificar si se ha seleccionado un archivo faltante
+    if (this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked)) {
+      console.error('No puedes seleccionar un archivo guardado si ya se ha seleccionado un archivo faltante.');
+      // Reiniciar los checkboxes de archivos faltantes
+      this.checkboxesArchivosFaltantesSeleccionados.fill(false);
+      // Actualizar la variable mostrarReemplazar
       this.mostrarActualizar = false;
-    } else if (tipo === 'faltantes') {
-      const archivo = this.archivosEstado.archivosFaltantes[index];
-      const fileName = archivo.archivo;
-      const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === fileName);
-      if (selectedFile) {
-        this.archivoSeleccionado = selectedFile;
-        console.log('Archivo faltante seleccionado:', this.archivoSeleccionado);
-      } else {
-        console.error('El archivo faltante no se encontró en la lista de archivos seleccionados.');
-      }
-      this.mostrarActualizar = this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked);
+    }
+    const archivo = this.archivosEstado.archivosGuardados[index];
+    const fileName = archivo.archivo;
+    const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === fileName);
+    if (selectedFile) {
+      this.archivoSeleccionado = selectedFile;
+      console.log('Archivo guardado seleccionado:', this.archivoSeleccionado);
+    } else {
+      console.error('El archivo guardado no se encontró en la lista de archivos seleccionados.');
+    }
+    // Actualizar la variable mostrarActualizar
+    this.mostrarReemplazar = this.checkboxesArchivosGuardadosSeleccionados.some(checked => checked);
+  } else if (tipo === 'faltantes') {
+    // Verificar si se ha seleccionado un archivo guardado
+    if (this.checkboxesArchivosGuardadosSeleccionados.some(checked => checked)) {
+      console.error('No puedes seleccionar un archivo faltante si ya se ha seleccionado un archivo guardado.');
+      // Reiniciar los checkboxes de archivos guardados
+      this.checkboxesArchivosGuardadosSeleccionados.fill(false);
+      // Actualizar la variable mostrarActualizar
       this.mostrarReemplazar = false;
     }
+    const archivo = this.archivosEstado.archivosFaltantes[index];
+    const fileName = archivo.archivo;
+    const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === fileName);
+    if (selectedFile) {
+      this.archivoSeleccionado = selectedFile;
+      console.log('Archivo faltante seleccionado:', this.archivoSeleccionado);
+    } else {
+      console.error('El archivo faltante no se encontró en la lista de archivos seleccionados.');
+    }
+    // Actualizar la variable mostrarReemplazar
+    this.mostrarActualizar = this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked);
   }
-  
+}
+
   
   
   onActualizarClick() {
@@ -200,13 +215,15 @@ export class TablaScriptsComponent implements OnInit {
   
     // Buscar los archivos faltantes correspondientes a los archivos seleccionados
     const archivosFaltantesSeleccionados = this.archivosEstado.archivosFaltantes
-      .filter((archivo) => nombresArchivosSeleccionados.includes(archivo.archivo));
+      .filter((archivo) => nombresArchivosSeleccionados.includes(archivo.archivo))
+      .map((archivo) => archivo.archivo);
   
     console.log('Archivos faltantes seleccionados:', archivosFaltantesSeleccionados);
   
     // Agregar los archivos faltantes seleccionados al FormData
-    archivosFaltantesSeleccionados.forEach((archivo) => {
-      formData.append('sqlFiles', archivo.archivo); // Agregar el nombre del archivo al FormData
+    archivosFaltantesSeleccionados.forEach((nombreArchivo) => {
+      const file = new File([nombreArchivo], nombreArchivo);
+      formData.append('sqlFiles', file);
     });
   
     console.log('FormData antes de enviar:', formData);
@@ -221,7 +238,6 @@ export class TablaScriptsComponent implements OnInit {
       }
     );
   }
-  
   
   
 
