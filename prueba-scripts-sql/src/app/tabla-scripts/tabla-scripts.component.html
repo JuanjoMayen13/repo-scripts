@@ -10,6 +10,7 @@
                 </button>
                 <div *ngIf="selectedFolder" class="text-sky-900 mt-4 text-center">
                     <p>Carpeta seleccionada: {{ selectedFolder.webkitRelativePath.split('/')[0] }}</p>
+                    
                 </div>
                 <button *ngIf="mostrarActualizar" (click)="onActualizarClick()" class="rounded-lg p-5 transition bg-sky-900 ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-white duration-300 mt-2" 
                  #fileButton2 type="button" multiple webkitdirectory>

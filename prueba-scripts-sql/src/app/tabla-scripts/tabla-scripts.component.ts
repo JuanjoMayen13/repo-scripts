@@ -122,7 +122,7 @@ export class TablaScriptsComponent implements OnInit {
       this.enviarNombresArchivos(fileNames); // Enviar los nombres de archivos sin modificar el orden
     }
   }
-
+  bloquearSeleccionFaltantes = true;
   
   onCheckboxChange(tipo: string, index: number) {
     if (tipo === 'guardados') {
@@ -152,38 +152,65 @@ export class TablaScriptsComponent implements OnInit {
         // Reiniciar los checkboxes de archivos guardados
         this.checkboxesArchivosGuardadosSeleccionados.fill(false);
         // Actualizar la variable mostrarActualizar
-        this.mostrarReemplazar = false;
+        this.mostrarActualizar = false;
       }
+  
+      // Verificar si el archivo seleccionado es el primero de los faltantes
+      if (index > 0 && !this.checkboxesArchivosFaltantesSeleccionados[index - 1]) {
+        console.error('Debes seleccionar el archivo faltante superior primero.');
+        this.checkboxesArchivosFaltantesSeleccionados[index] = false;
+        return;
+      }
+  
       const archivo = this.archivosEstado.archivosFaltantes[index];
       const fileName = archivo.archivo;
       const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === fileName);
       if (selectedFile) {
         this.archivoSeleccionado = selectedFile;
         console.log('Archivo faltante seleccionado:', this.archivoSeleccionado);
+        // Desmarcar los checkboxes de archivos faltantes que están debajo del seleccionado
+        this.checkboxesArchivosFaltantesSeleccionados.fill(false, index + 1);
+        this.checkboxesArchivosFaltantesSeleccionados[index] = true; // Marcar el checkbox actual
       } else {
         console.error('El archivo faltante no se encontró en la lista de archivos seleccionados.');
       }
       // Actualizar la variable mostrarReemplazar
-      this.mostrarActualizar = this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked);
+      this.mostrarReemplazar = this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked);
     }
   }
+  
+  
 
+  
   onActualizarClick() {
     const formData = new FormData();
 
-    // Agregar todos los archivos seleccionados al FormData
-    if (this.selectedFiles) {
-      Array.from(this.selectedFiles).forEach((file: File, index: number) => {
-        if (this.checkboxesArchivosGuardadosSeleccionados[index] || this.checkboxesArchivosFaltantesSeleccionados[index]) {
-          formData.append('sqlFiles', file); // Agregar el archivo al FormData
-          console.log('Archivo seleccionado para actualizar:', file);
-        }
-      });
-    }
+    // Obtener los nombres de los archivos seleccionados para reemplazar
+    const nombresArchivosSeleccionados = this.archivosEstado.archivosFaltantes
+      .filter((archivo, index) => this.checkboxesArchivosFaltantesSeleccionados[index])
+      .map((archivo) => archivo.archivo);
 
-    console.log('FormData antes de enviar:', formData); // Mostrar FormData antes de enviar la solicitud
+    console.log('Nombres de archivos seleccionados:', nombresArchivosSeleccionados);
 
-    // Llamar al método para ejecutar los archivos SQL con el FormData como parámetro
+    // Buscar los archivos guardados correspondientes a los archivos seleccionados
+    const archivosFaltantesSeleccionados = this.archivosEstado.archivosFaltantes
+      .filter((archivo) => nombresArchivosSeleccionados.includes(archivo.archivo))
+      .map((archivo) => archivo.archivo);
+
+    console.log('Archivos guardados seleccionados:', archivosFaltantesSeleccionados);
+
+    // Agregar los archivos guardados seleccionados al FormData
+    archivosFaltantesSeleccionados.forEach((nombreArchivo) => {
+      // Buscar el archivo en la lista de archivos seleccionados
+      const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === nombreArchivo);
+      if (selectedFile) {
+        formData.append('sqlFiles', selectedFile);
+      }
+    });
+
+    console.log('FormData antes de enviar:', formData);
+
+    // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
     this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
       (response) => {
         console.log(response); // Manejar respuesta exitosa
@@ -197,25 +224,32 @@ export class TablaScriptsComponent implements OnInit {
   onReemplazarClick() {
     const formData = new FormData();
 
-    // Agregar archivos guardados seleccionados al FormData
-    this.archivosEstado.archivosGuardados.forEach((archivo, index) => {
-      if (this.checkboxesArchivosGuardadosSeleccionados[index]) {
-        formData.append('sqlFiles', archivo.archivo);
-        console.log('Archivo guardado seleccionado para reemplazar:', archivo.archivo);
+    // Obtener los nombres de los archivos seleccionados para reemplazar
+    const nombresArchivosSeleccionados = this.archivosEstado.archivosGuardados
+      .filter((archivo, index) => this.checkboxesArchivosGuardadosSeleccionados[index])
+      .map((archivo) => archivo.archivo);
+
+    console.log('Nombres de archivos seleccionados:', nombresArchivosSeleccionados);
+
+    // Buscar los archivos guardados correspondientes a los archivos seleccionados
+    const archivosGuardadosSeleccionados = this.archivosEstado.archivosGuardados
+      .filter((archivo) => nombresArchivosSeleccionados.includes(archivo.archivo))
+      .map((archivo) => archivo.archivo);
+
+    console.log('Archivos guardados seleccionados:', archivosGuardadosSeleccionados);
+
+    // Agregar los archivos guardados seleccionados al FormData
+    archivosGuardadosSeleccionados.forEach((nombreArchivo) => {
+      // Buscar el archivo en la lista de archivos seleccionados
+      const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === nombreArchivo);
+      if (selectedFile) {
+        formData.append('sqlFiles', selectedFile);
       }
     });
 
-    // Agregar archivos faltantes seleccionados al FormData
-    this.archivosEstado.archivosFaltantes.forEach((archivo, index) => {
-      if (this.checkboxesArchivosFaltantesSeleccionados[index]) {
-        formData.append('sqlFiles', archivo.archivo);
-        console.log('Archivo faltante seleccionado para reemplazar:', archivo.archivo);
-      }
-    });
+    console.log('FormData antes de enviar:', formData);
 
-    console.log('FormData antes de enviar en onReemplazarClick:', formData);
-
-    // Llamar al método para ejecutar los archivos SQL con el FormData como parámetro
+    // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
     this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
       (response) => {
         console.log(response); // Manejar respuesta exitosa

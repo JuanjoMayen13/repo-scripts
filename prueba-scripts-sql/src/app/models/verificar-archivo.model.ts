@@ -8,4 +8,5 @@ export interface Archivos {
     fecha_Hora:  string;
     userName:    string;
     descripcion: string;
+    existe:      boolean;
 }
