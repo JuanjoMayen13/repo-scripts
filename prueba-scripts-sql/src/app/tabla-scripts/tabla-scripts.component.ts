@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Archivos, estadoArchivos  } from '../models/verificar-archivo.model';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from '../loading/loading.component';
-
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-tabla-scripts',
   standalone: true,
@@ -14,7 +14,6 @@ import { LoadingComponent } from '../loading/loading.component';
 })
 export class TablaScriptsComponent implements OnInit {
   selectedFolder: any;
-  //arreglos para las interfaces o models
   folderFiles: File[] = [];
   estadoArchivos: estadoArchivos[] = [];
   archivos: Archivos[] = [];
@@ -22,25 +21,39 @@ export class TablaScriptsComponent implements OnInit {
   mostrarReemplazar: boolean = false;
   checkboxesArchivosGuardadosSeleccionados: boolean[] = [];
   checkboxesArchivosFaltantesSeleccionados: boolean[] = [];
-
   archivoSeleccionado: File | null = null;
   nombreArchivoSeleccionado: string | null = null;
-  
   archivosEstado: estadoArchivos = { archivosGuardados: [], archivosFaltantes: [] };
- 
+  mensajeInterfaz: string = '';
   selectedFiles: FileList | null = null;
+  filtroArchivos = new FormControl('Todos');
+  mostrarGuardados: boolean = false;
+  mostrarFaltantes: boolean = true;
+;
+
   @ViewChild('fileButton') fileButton!: ElementRef<HTMLInputElement>;
 
   constructor(private apiQueriesService: ApiQueriesService) {}
+
+  ngOnInit(): void {}
 
   ordenarArchivosPorNombre(archivos: any[]): any[] {
     return archivos;
   }
   
-  ngOnInit(): void { }
 
-  @HostListener('document:keydown', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent) {
+  primeroGuardados() {
+      this.mostrarGuardados = true;
+      this.mostrarFaltantes = false;
+  }
+
+  primeroFaltantes() {
+      this.mostrarGuardados = false;
+      this.mostrarFaltantes = true;
+  }
+
+    @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'F1') {
       this.openFileExplorer();
       event.preventDefault(); //se evita la accion por default de la tecla F1
@@ -82,28 +95,25 @@ export class TablaScriptsComponent implements OnInit {
     document.body.removeChild(fileInput);
   }
 
-
   selectFolder(event: any) {
     if (event.target.files.length > 0) {
 
-      const folder = event.target.files[0];
-      this.selectedFolder = folder;
+    const folder = event.target.files[0];
+    this.selectedFolder = folder;
       // Filtra los archivos de la carpeta
-      const folderFiles: File[] = [];
-      for (let i = 0; i < event.target.files.length; i++) {
-        const file = event.target.files[i];
+    const folderFiles: File[] = [];
+    for (let i = 0; i < event.target.files.length; i++) {
+      const file = event.target.files[i];
         // Verifica si el archivo está dentro de la carpeta seleccionada
-        if (file.webkitRelativePath.startsWith(folder.webkitRelativePath)) {
+    if (file.webkitRelativePath.startsWith(folder.webkitRelativePath)) {
           folderFiles.push(file);
-        }
-      }
-  
-      //Guarda los archivos de la carpeta
-      this.folderFiles = folderFiles;
-  
-      //Llama a enviarNombresArchivos con los nombres de archivos de la carpeta seleccionada
-      const fileNames = this.folderFiles.map(file => file.name);
-      this.enviarNombresArchivos(fileNames);
+    }
+  }
+    //Guarda los archivos de la carpeta
+    this.folderFiles = folderFiles;
+    //Llama a enviarNombresArchivos con los nombres de archivos de la carpeta seleccionada
+    const fileNames = this.folderFiles.map(file => file.name);
+    this.enviarNombresArchivos(fileNames);
     }
   }
 
@@ -124,82 +134,61 @@ export class TablaScriptsComponent implements OnInit {
   }
   bloquearSeleccionFaltantes = true;
   
-  onCheckboxChange(tipo: string, index: number) {
+onCheckboxChange(tipo: string, index: number) {
     if (tipo === 'guardados') {
-      // Verificar si se ha seleccionado un archivo faltante
+    // Verificar si se ha seleccionado un archivo faltante
       if (this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked)) {
-        console.error('No puedes seleccionar un archivo guardado si ya se ha seleccionado un archivo faltante.');
-        // Reiniciar los checkboxes de archivos faltantes
-        this.checkboxesArchivosFaltantesSeleccionados.fill(false);
-        // Actualizar la variable mostrarReemplazar
-        this.mostrarActualizar = false;
-      }
+      console.error('No puedes seleccionar un archivo guardado si ya se ha seleccionado un archivo faltante.');
+      // Reiniciar los checkboxes de archivos faltantes
+      this.checkboxesArchivosFaltantesSeleccionados.fill(false);
+      // Actualizar la variable mostrarReemplazar
+      this.mostrarActualizar = false;
+      } 
       const archivo = this.archivosEstado.archivosGuardados[index];
       const fileName = archivo.archivo;
       const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === fileName);
       if (selectedFile) {
-        this.archivoSeleccionado = selectedFile;
-        console.log('Archivo guardado seleccionado:', this.archivoSeleccionado);
+      this.archivoSeleccionado = selectedFile;
+      console.log('Archivo guardado seleccionado:', this.archivoSeleccionado);
       } else {
-        console.error('El archivo guardado no se encontró en la lista de archivos seleccionados.');
+      console.error('El archivo guardado no se encontró en la lista de archivos seleccionados.');
       }
-      // Actualizar la variable mostrarActualizar
+    // Actualizar la variable mostrarActualizar
       this.mostrarReemplazar = this.checkboxesArchivosGuardadosSeleccionados.some(checked => checked);
     } else if (tipo === 'faltantes') {
-      // Verificar si se ha seleccionado un archivo guardado
+    // Verificar si se ha seleccionado un archivo guardado
       if (this.checkboxesArchivosGuardadosSeleccionados.some(checked => checked)) {
-        console.error('No puedes seleccionar un archivo faltante si ya se ha seleccionado un archivo guardado.');
-        // Reiniciar los checkboxes de archivos guardados
-        this.checkboxesArchivosGuardadosSeleccionados.fill(false);
-        // Actualizar la variable mostrarActualizar
-        this.mostrarActualizar = false;
+      console.error('No puedes seleccionar un archivo faltante si ya se ha seleccionado un archivo guardado.');
+      // Reiniciar los checkboxes de archivos guardados
+      this.checkboxesArchivosGuardadosSeleccionados.fill(false);
+      // Actualizar la variable mostrarActualizar
+      this.mostrarReemplazar = false;
       }
-  
-      // Verificar si el archivo seleccionado es el primero de los faltantes
-      if (index > 0 && !this.checkboxesArchivosFaltantesSeleccionados[index - 1]) {
-        console.error('Debes seleccionar el archivo faltante superior primero.');
-        this.checkboxesArchivosFaltantesSeleccionados[index] = false;
-        return;
-      }
-  
       const archivo = this.archivosEstado.archivosFaltantes[index];
       const fileName = archivo.archivo;
       const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === fileName);
       if (selectedFile) {
-        this.archivoSeleccionado = selectedFile;
-        console.log('Archivo faltante seleccionado:', this.archivoSeleccionado);
-        // Desmarcar los checkboxes de archivos faltantes que están debajo del seleccionado
-        this.checkboxesArchivosFaltantesSeleccionados.fill(false, index + 1);
-        this.checkboxesArchivosFaltantesSeleccionados[index] = true; // Marcar el checkbox actual
+      this.archivoSeleccionado = selectedFile;
+      console.log('Archivo faltante seleccionado:', this.archivoSeleccionado);
       } else {
-        console.error('El archivo faltante no se encontró en la lista de archivos seleccionados.');
+      console.error('El archivo faltante no se encontró en la lista de archivos seleccionados.');
       }
-      // Actualizar la variable mostrarReemplazar
-      this.mostrarReemplazar = this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked);
+    // Actualizar la variable mostrarReemplazar
+      this.mostrarActualizar = this.checkboxesArchivosFaltantesSeleccionados.some(checked => checked);
     }
   }
   
-  
-
-  
   onActualizarClick() {
     const formData = new FormData();
-
-    // Obtener los nombres de los archivos seleccionados para reemplazar
     const nombresArchivosSeleccionados = this.archivosEstado.archivosFaltantes
       .filter((archivo, index) => this.checkboxesArchivosFaltantesSeleccionados[index])
       .map((archivo) => archivo.archivo);
-
     console.log('Nombres de archivos seleccionados:', nombresArchivosSeleccionados);
-
     // Buscar los archivos guardados correspondientes a los archivos seleccionados
     const archivosFaltantesSeleccionados = this.archivosEstado.archivosFaltantes
       .filter((archivo) => nombresArchivosSeleccionados.includes(archivo.archivo))
       .map((archivo) => archivo.archivo);
-
     console.log('Archivos guardados seleccionados:', archivosFaltantesSeleccionados);
-
-    // Agregar los archivos guardados seleccionados al FormData
     archivosFaltantesSeleccionados.forEach((nombreArchivo) => {
       // Buscar el archivo en la lista de archivos seleccionados
       const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === nombreArchivo);
@@ -207,38 +196,46 @@ export class TablaScriptsComponent implements OnInit {
         formData.append('sqlFiles', selectedFile);
       }
     });
-
     console.log('FormData antes de enviar:', formData);
-
     // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
     this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
       (response) => {
-        console.log(response); // Manejar respuesta exitosa
+        this.mensajeInterfaz = response;
+        console.log(response);
+        // Establecer mensajeInterfaz en null después de 5 segundos
+        setTimeout(() => {
+          this.mensajeInterfaz = '';
+          window.location.reload();
+        }, 5000);
       },
       (error) => {
-        console.error(error); // Manejar error
+        if (error.error && error.error.text) {
+          this.mensajeInterfaz = error.error.text;
+        } else {
+          this.mensajeInterfaz = 'Error inesperado al procesar la respuesta del servidor.';
+        }
+        console.error(error);
+        // Establecer mensajeInterfaz en null después de 5 segundos
+        setTimeout(() => {
+          this.mensajeInterfaz = '';
+          window.location.reload();
+        }, 5000);
       }
     );
+    
   }
 
   onReemplazarClick() {
     const formData = new FormData();
-
-    // Obtener los nombres de los archivos seleccionados para reemplazar
     const nombresArchivosSeleccionados = this.archivosEstado.archivosGuardados
       .filter((archivo, index) => this.checkboxesArchivosGuardadosSeleccionados[index])
       .map((archivo) => archivo.archivo);
-
     console.log('Nombres de archivos seleccionados:', nombresArchivosSeleccionados);
-
     // Buscar los archivos guardados correspondientes a los archivos seleccionados
     const archivosGuardadosSeleccionados = this.archivosEstado.archivosGuardados
       .filter((archivo) => nombresArchivosSeleccionados.includes(archivo.archivo))
       .map((archivo) => archivo.archivo);
-
     console.log('Archivos guardados seleccionados:', archivosGuardadosSeleccionados);
-
-    // Agregar los archivos guardados seleccionados al FormData
     archivosGuardadosSeleccionados.forEach((nombreArchivo) => {
       // Buscar el archivo en la lista de archivos seleccionados
       const selectedFile = Array.from(this.selectedFiles || []).find(file => file.name === nombreArchivo);
@@ -246,16 +243,30 @@ export class TablaScriptsComponent implements OnInit {
         formData.append('sqlFiles', selectedFile);
       }
     });
-
     console.log('FormData antes de enviar:', formData);
-
     // Llama al método para ejecutar los archivos SQL con el FormData como parámetro
     this.apiQueriesService.ejecutarArchivosSQL(formData).subscribe(
       (response) => {
-        console.log(response); // Manejar respuesta exitosa
+        this.mensajeInterfaz = response;
+        console.log(response);
+        // Establecer mensajeInterfaz en null después de 5 segundos
+        setTimeout(() => {
+          this.mensajeInterfaz = '';
+          window.location.reload();
+        }, 5000);
       },
       (error) => {
-        console.error(error); // Manejar error
+        if (error.error && error.error.text) {
+          this.mensajeInterfaz = error.error.text;
+        } else {
+          this.mensajeInterfaz = 'Error inesperado al procesar la respuesta del servidor.';
+        }
+        console.error(error);
+        // Establecer mensajeInterfaz en null después de 5 segundos
+        setTimeout(() => {
+          this.mensajeInterfaz = '';
+          window.location.reload();
+        }, 5000);
       }
     );
   }
