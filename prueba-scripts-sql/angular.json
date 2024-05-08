@@ -26,20 +26,14 @@
             ],
             "styles": [
               "src/styles.css",
-<<<<<<< HEAD
               
-=======
->>>>>>> e1063292a3a37765d6f267ead0e6512227224525
               "node_modules/tailwindcss/tailwind.css",
               "node_modules/tailwindcss/utilities.css",
               "node_modules/tailwindcss/components.css",
               "node_modules/tailwindcss/base.css"
             ],
             "scripts": [
-<<<<<<< HEAD
               
-=======
->>>>>>> e1063292a3a37765d6f267ead0e6512227224525
             ],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -103,21 +97,14 @@
             ],
             "styles": [
               "src/styles.css",
-<<<<<<< HEAD
               
-=======
->>>>>>> e1063292a3a37765d6f267ead0e6512227224525
               "node_modules/tailwindcss/tailwind.css",
               "node_modules/tailwindcss/utilities.css",
               "node_modules/tailwindcss/components.css",
               "node_modules/tailwindcss/base.css"
             ],
             "scripts": [
-<<<<<<< HEAD
            
-=======
-              
->>>>>>> e1063292a3a37765d6f267ead0e6512227224525
             ]
           }
         }

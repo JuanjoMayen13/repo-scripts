@@ -38,8 +38,9 @@ export class TablaScriptsComponent implements OnInit {
   ngOnInit(): void {}
 
   ordenarArchivosPorNombre(archivos: any[]): any[] {
-    return archivos.sort((a, b) => a.archivo.localeCompare(b.archivo));
+    return archivos;
   }
+  
 
   primeroGuardados() {
       this.mostrarGuardados = true;
@@ -59,11 +60,9 @@ export class TablaScriptsComponent implements OnInit {
     } if (event.key === 'F2') {
       this.onActualizarClick();
       event.preventDefault();
-      console.log("Se ejecuto F2 para actualizar un scipt")
     } if (event.key === 'F3'){
       this.onReemplazarClick();
       event.preventDefault();
-      console.log("Se ejecuto F3 para reemplazar un script") 
     }
   }
 
@@ -130,10 +129,10 @@ export class TablaScriptsComponent implements OnInit {
         const file = this.selectedFiles[i];
         fileNames.push(file.name);
       }
-      this.enviarNombresArchivos(fileNames);
+      this.enviarNombresArchivos(fileNames); // Enviar los nombres de archivos sin modificar el orden
     }
   }
-
+  bloquearSeleccionFaltantes = true;
   
 onCheckboxChange(tipo: string, index: number) {
     if (tipo === 'guardados') {
