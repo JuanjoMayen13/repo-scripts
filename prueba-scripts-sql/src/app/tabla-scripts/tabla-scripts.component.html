@@ -48,8 +48,14 @@
                 <h1 class="text-2xl font-bold mb-4 text-center text-sky-900">Detalles de Archivos</h1>
             </div>
             <div class="absolute top-0 right-0 mt-4 mr-4">
-                <button (click)="primeroFaltantes()" class="px-4 py-2 mr-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-700">Faltantes</button>
+            <ng-container *ngIf="mostrarGuardados">
+                <button (click)="primeroFaltantes()" class="px-4 py-2 mr-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-700" >Faltantes</button>
+                <button (click)="primeroGuardados()" class="px-4 py-2 mr-2 bg-green-900 text-white font-bold rounded-lg hover:bg-green-700">Guardados</button>
+            </ng-container>
+            <ng-container *ngIf="mostrarFaltantes">
+                <button (click)="primeroFaltantes()" class="px-4 py-2 mr-2 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-700" >Faltantes</button>
                 <button (click)="primeroGuardados()" class="px-4 py-2 mr-2 bg-green-500 text-white font-bold rounded-lg hover:bg-green-700">Guardados</button>
+            </ng-container>
                 <div *ngIf="mensajeInterfaz" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-sky-900 text-white px-6 py-3 rounded-lg shadow-md z-50">
                     {{ mensajeInterfaz }}
                 </div>
