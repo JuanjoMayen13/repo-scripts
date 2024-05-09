@@ -91,7 +91,7 @@
                             </tr>
                         </ng-container>
                         <!-- Iterar sobre archivos faltantes -->
-                        <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes; let i = index">
+                        <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes; let i = index;">
                             <tr class="bg-white">
                                 <td class="px-4 font-normal py-2 whitespace-nowrap">
                                     <input type="checkbox" [(ngModel)]="checkboxesArchivosFaltantesSeleccionados[i]" (change)="onCheckboxChange('faltantes', i)">
@@ -107,7 +107,7 @@
                     <!-- Si se selecciona primero "Faltantes" -->
                     <ng-container *ngIf="mostrarFaltantes">
                         <!-- Iterar sobre archivos faltantes -->
-                        <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes; let i = index">
+                        <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes; let i = index;">
                             <tr class="bg-white">
                                 <td class="px-4 font-normal py-2 whitespace-nowrap">
                                     <input type="checkbox" [(ngModel)]="checkboxesArchivosFaltantesSeleccionados[i]" (change)="onCheckboxChange('faltantes', i)">
