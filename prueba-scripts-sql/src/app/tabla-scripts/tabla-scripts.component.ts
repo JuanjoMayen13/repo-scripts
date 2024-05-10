@@ -35,7 +35,24 @@ export class TablaScriptsComponent implements OnInit {
 
   constructor(private apiQueriesService: ApiQueriesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.checkboxInit();
+  }
+
+  checkboxInit(): void {
+    if (this.archivosEstado && this.archivosEstado.archivosFaltantes.length > 0) {
+      this.checkboxesArchivosFaltantesSeleccionados = this.archivosEstado.archivosFaltantes.map(() => true);
+      this.mostrarActualizar = true;
+    }
+    if (this.checkboxesArchivosGuardadosSeleccionados.some(checked => checked)) {
+      console.error('No puedes seleccionar un archivo faltante si ya se ha seleccionado un archivo guardado.');
+      //Va reiniciar los checkboxes de archivos faltantes
+      this.checkboxesArchivosGuardadosSeleccionados.fill(false);
+      //Va actualizar la variable mostrarReemplazar
+      this.mostrarActualizar = false;
+      return;
+    } 
+  }
 
   ordenarArchivosPorNombre(archivos: any[]): any[] {
     return archivos;
@@ -51,6 +68,8 @@ export class TablaScriptsComponent implements OnInit {
       this.mostrarGuardados = false;
       this.mostrarFaltantes = true;
   }
+
+
 
     @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -75,6 +94,7 @@ export class TablaScriptsComponent implements OnInit {
     this.apiQueriesService.verificarArchivos(nombresArchivos).subscribe(
       (data: estadoArchivos) => {
         this.archivosEstado = data;
+        this.checkboxInit();
         console.log(data); //Asigna los datos recibidos a la variable archivosEstado
       },
       error => {

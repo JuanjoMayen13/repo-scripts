@@ -66,7 +66,9 @@
             <table class="w-full border-collapse border border-gray-400 divide-gray-400 "> 
                 <thead class="">
                     <tr class="bg-gray-50 dark:bg-gray-50">
-                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Seleccionar</th>
+                        <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Seleccionar
+                            
+                        </th>
                         <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Nombre de archivo</th>
                         <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Fecha actualización</th>
                         <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-sky-500 dark:text-sky-900">Usuario</th>
@@ -109,6 +111,7 @@
                         <!-- Iterar sobre archivos faltantes -->
                         <ng-container *ngFor="let archivo of archivosEstado.archivosFaltantes; let i = index;">
                             <tr class="bg-white">
+                                
                                 <td class="px-4 font-normal py-2 whitespace-nowrap">
                                     <input type="checkbox" [(ngModel)]="checkboxesArchivosFaltantesSeleccionados[i]" (change)="onCheckboxChange('faltantes', i)">
                                 </td>
