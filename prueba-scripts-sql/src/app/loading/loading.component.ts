@@ -13,11 +13,9 @@ export class LoadingComponent implements OnInit{
   progress: number = 0;
   @Input() progressValue: number = 0;
 
-  
   ngOnInit(): void {
     setTimeout(() => {
-      // Supongamos que los datos se han cargado después de 3 segundos
-      this.isLoading = false; // Ocultar el componente de carga
+      this.isLoading = false; //Ocultar el componente de carga
     }, 3000);
   }
 
